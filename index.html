@@ -125,13 +125,32 @@
     transition:background .2s;
   }
   .float-card .dots i.active { background:#FCCA2E; }
+  .float-card .fc-arrows {
+    position:absolute; bottom:9px; right:16px;
+    display:flex; gap:10px; align-items:center;
+  }
+  .float-card .fc-arrows button {
+    background:none; border:none; padding:6px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0.7; transition:opacity .2s;
+  }
+  .float-card .fc-arrows button:hover { opacity:1; }
+  .float-card .fc-arrows svg { display:block; width:8px; height:12px; }
 
   /* ---- hero ---- */
   .hero {
     flex:1;
     display:flex; flex-direction:column; align-items:center;
     text-align:center;
-    padding-top:clamp(12px, 3.5vh, 48px);
+    padding-top:0;
+  }
+  .hero-main {
+    flex:1;
+    display:flex; flex-direction:column; align-items:center;
+    justify-content:center;
+    text-align:center;
+    width:100%;
+    padding:clamp(12px, 3vh, 40px) 0;
   }
   .trusted-label {
     font-size:15px; font-weight:400; color:rgba(255,255,255,0.9);
@@ -326,7 +345,7 @@
   .cases {
     position:relative;
     width:100%;
-    min-height:100vh;
+    min-height:max(100vh, 1080px);
     background:#0b0f14;
     overflow:hidden;
     display:flex;
@@ -335,7 +354,7 @@
   }
   .cases-collage {
     position:absolute; inset:0;
-    background-image:url('assets/bgcases.jpg');
+    background-image:url('bgcases.jpg');
     background-size:cover;
     background-position:center top;
     background-repeat:no-repeat;
@@ -347,39 +366,64 @@
       radial-gradient(120% 80% at 50% 50%, transparent 40%, rgba(11,15,20,0.35) 100%),
       linear-gradient(180deg, rgba(11,15,20,0.55) 0%, transparent 18%, transparent 82%, rgba(11,15,20,0.75) 100%);
   }
-  .cases-ellipse {
-    position:relative; z-index:2;
-    width:min(760px, 86vw);
-    aspect-ratio:1.15 / 1;
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    text-align:center;
-    padding:0 8%;
+  .glass-ellipse {
+    position:absolute;
+    width:640.52px;
+    height:786.92px;
+    left:calc(50% - 640.52px / 2);
+    top:229.36px;
     border-radius:50%;
     background:rgba(255,255,255,0.5);
-    backdrop-filter:blur(28px) saturate(120%);
-    -webkit-backdrop-filter:blur(28px) saturate(120%);
-    box-shadow:0 20px 80px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6);
+    backdrop-filter:blur(28px) saturate(115%);
+    -webkit-backdrop-filter:blur(28px) saturate(115%);
+    transform:rotate(66.87deg);
+    transform-origin:center;
+    box-shadow:
+      0 24px 60px rgba(20,29,40,0.14),
+      inset 0 1px 1px rgba(255,255,255,0.65);
+    z-index:2;
+    pointer-events:none;
   }
-  .cases-ellipse h2 {
+  .cases-text {
+    position:absolute;
+    z-index:3;
+    left:50%;
+    top:calc(229.36px + 786.92px / 2);
+    transform:translate(-50%, -50%);
+    width:560px;
+    max-width:78vw;
+    text-align:center;
+    pointer-events:none;
+  }
+  .cases-text h2 {
     font-family:'Unbounded',sans-serif;
-    font-weight:500;
-    color:#111;
-    font-size:clamp(28px, 3.6vw, 52px);
-    line-height:1.08;
-    letter-spacing:-1px;
-    margin-bottom:20px;
-  }
-  .cases-ellipse p {
-    color:#222;
-    font-size:clamp(16px, 1.5vw, 22px);
-    line-height:1.45;
-    max-width:70%;
     font-weight:400;
+    color:#111;
+    font-size:40px;
+    line-height:1.12;
+    letter-spacing:-1px;
+    margin:0 0 18px;
+    text-align:center;
+  }
+  .cases-text p {
+    font-family:'Graphik RBC',sans-serif;
+    color:#222;
+    font-size:28px;
+    line-height:1.4;
+    max-width:88%;
+    margin:0 auto;
+    font-weight:400;
+    text-align:center;
   }
   @media (max-width:700px) {
-    .cases-ellipse { aspect-ratio:1 / 1; padding:0 6%; }
-    .cases-ellipse p { max-width:88%; }
+    .glass-ellipse {
+      width:min(560px, 90vw);
+      height:auto; aspect-ratio:640.52 / 786.92;
+      left:50%; transform:translateX(-50%) rotate(66.87deg);
+    }
+    .cases-text { left:50%; width:80vw; }
+    .cases-text h2 { font-size:32px; }
+    .cases-text p { font-size:18px; max-width:92%; }
   }
 
 </style>
@@ -433,9 +477,14 @@
     <div class="dots" id="fcDots">
       <i class="active" onclick="fcGo(0)"></i><i onclick="fcGo(1)"></i><i onclick="fcGo(2)"></i>
     </div>
+    <div class="fc-arrows">
+      <button aria-label="Previous" onclick="fcPrev()"><svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="al" fill="white"><path d="M7.31641 11.2832L0 5.6416L7.31641 0V11.2832Z"/></mask><path d="M7.31641 11.2832L6.70577 12.0751L8.31641 13.3171V11.2832H7.31641ZM0 5.6416L-0.610635 4.84969L-1.63764 5.6416L-0.610635 6.43351L0 5.6416ZM7.31641 0H8.31641V-2.03386L6.70577 -0.791912L7.31641 0ZM7.31641 11.2832L7.92704 10.4913L0.610635 4.84969L0 5.6416L-0.610635 6.43351L6.70577 12.0751L7.31641 11.2832ZM0 5.6416L0.610635 6.43351L7.92704 0.791912L7.31641 0L6.70577 -0.791912L-0.610635 4.84969L0 5.6416ZM7.31641 0H6.31641V11.2832H7.31641H8.31641V0H7.31641Z" fill="#D9D9D9" mask="url(#al)"/></svg></button>
+      <button aria-label="Next" onclick="fcNextManual()"><svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="ar" fill="white"><path d="M1.27919e-06 -4.93226e-07L7.31641 5.6416L0 11.2832L1.27919e-06 -4.93226e-07Z"/></mask><path d="M1.27919e-06 -4.93226e-07L0.610636 -0.791913L-0.999998 -2.03386L-0.999999 -5.60639e-07L1.27919e-06 -4.93226e-07ZM7.31641 5.6416L7.92704 6.43351L8.95405 5.6416L7.92704 4.84969L7.31641 5.6416ZM0 11.2832L-1 11.2832L-1 13.3171L0.610635 12.0751L0 11.2832ZM1.27919e-06 -4.93226e-07L-0.610634 0.791912L6.70577 6.43351L7.31641 5.6416L7.92704 4.84969L0.610636 -0.791913L1.27919e-06 -4.93226e-07ZM7.31641 5.6416L6.70577 4.84969L-0.610635 10.4913L0 11.2832L0.610635 12.0751L7.92704 6.43351L7.31641 5.6416ZM0 11.2832L1 11.2832L1 -4.25812e-07L1.27919e-06 -4.93226e-07L-0.999999 -5.60639e-07L-1 11.2832L0 11.2832Z" fill="#D9D9D9" mask="url(#ar)"/></svg></button>
+    </div>
   </div>
 
   <section class="hero">
+    <div class="hero-main">
     <div class="trusted-label">Trusted by Top Brands</div>
     <div class="brand-circles">
       <svg style="width:38px;height:auto;display:block" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -543,6 +592,7 @@
 <path d="M10 9.5C10 8.685 10.396 7.968 11 7.512C10.5698 7.18119 10.0427 7.00125 9.5 7C8.83696 7 8.20107 7.26339 7.73223 7.73223C7.26339 8.20107 7 8.83696 7 9.5C7 10.163 7.26339 10.7989 7.73223 11.2678C8.20107 11.7366 8.83696 12 9.5 12C10.0427 11.9987 10.5698 11.8188 11 11.488C10.6903 11.2571 10.4387 10.9572 10.2651 10.6121C10.0916 10.2671 10.0008 9.88628 10 9.5Z" fill="#838383"/>
 <path d="M18 0H2C0.897 0 0 0.897 0 2V14C0 15.103 0.897 16 2 16H18C19.103 16 20 15.103 20 14V2C20 0.897 19.103 0 18 0ZM2 14V2H18L18.002 14H2Z" fill="#838383"/>
 </svg></span> No credit card required</div>
+    </div>
 
     <div class="marquee">
       <div id="mqTemplate" style="display:none"><svg style="width:100px;height:auto;display:block" viewBox="0 0 118 53" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -641,7 +691,8 @@
 
 <section class="cases">
   <div class="cases-collage"></div>
-  <div class="cases-ellipse">
+  <div class="glass-ellipse"></div>
+  <div class="cases-text">
     <h2>Convert More,<br>Not Just Look Nice</h2>
     <p>Content engineered around what buyers actually click and buy</p>
   </div>
@@ -683,8 +734,10 @@ function hideChips(){
   document.getElementById('askbar').classList.remove('focused');
 }
 (function(){
+ try{
   var inp=document.getElementById('askInput');
   var bar=document.getElementById('askbar');
+  if(!inp||!bar) return;
   // Any click/tap on the input (even when already focused) re-rolls & shows chips
   bar.addEventListener('mousedown',function(e){
     if(e.target.closest('.send')) return;
@@ -695,35 +748,78 @@ function hideChips(){
   document.addEventListener('mousedown',function(e){
     if(!e.target.closest('.askbar-stack')) hideChips();
   });
+ }catch(err){}
 })();
 var fcCur=0;
-function fcGo(n){
-  var s=document.querySelectorAll('.fc-slide:not(.fc-gone)');
-  var d=document.querySelectorAll('#fcDots i');
-  document.querySelectorAll('.fc-slide').forEach((el,idx)=>el.classList.toggle('active',idx===n));
-  d.forEach((el,idx)=>el.classList.toggle('active',idx===n));
+var fcTimer=null;
+function fcRemaining(){
+  var slides=document.querySelectorAll('.fc-slide');
+  var r=[];
+  slides.forEach((el,idx)=>{ if(!el.classList.contains('fc-gone')) r.push(idx); });
+  return r;
+}
+function fcShow(n){
+  var slides=document.querySelectorAll('.fc-slide');
+  var dots=document.querySelectorAll('#fcDots i');
+  slides.forEach((el,idx)=>el.classList.toggle('active',idx===n));
+  dots.forEach((el,idx)=>el.classList.toggle('active',idx===n));
   fcCur=n;
+}
+function fcNext(){
+  var rem=fcRemaining();
+  if(rem.length<=1) return;
+  var pos=rem.indexOf(fcCur);
+  var next=rem[(pos+1)%rem.length];
+  fcShow(next);
+}
+function fcNextManual(){ fcNext(); fcStart(); }
+function fcPrev(){
+  var rem=fcRemaining();
+  if(rem.length<=1) return;
+  var pos=rem.indexOf(fcCur);
+  var prev=rem[(pos-1+rem.length)%rem.length];
+  fcShow(prev);
+  fcStart();
+}
+function fcStart(){
+  fcStop();
+  if(fcRemaining().length>1) fcTimer=setInterval(fcNext,4000);
+}
+function fcStop(){ if(fcTimer){ clearInterval(fcTimer); fcTimer=null; } }
+function fcGo(n){
+  fcShow(n);
+  fcStart(); // restart timer after manual pick
 }
 function fcClose(){
   var slides=document.querySelectorAll('.fc-slide');
-  // mark current as gone
   slides[fcCur].classList.add('fc-gone');
   slides[fcCur].classList.remove('active');
-  // hide its dot
   var dots=document.querySelectorAll('#fcDots i');
   if(dots[fcCur]) dots[fcCur].style.display='none';
-  // find next remaining slide
-  var remaining=[];
-  slides.forEach((el,idx)=>{ if(!el.classList.contains('fc-gone')) remaining.push(idx); });
+  var remaining=fcRemaining();
   if(remaining.length===0){
     document.getElementById('floatCard').style.display='none';
+    fcStop();
     return;
   }
   var next=remaining[0];
-  slides[next].classList.add('active');
-  dots.forEach((el,idx)=>el.classList.toggle('active',idx===next));
-  fcCur=next;
+  fcShow(next);
+  fcStart();
 }
+// pause on hover, resume on leave
+(function(){
+  function boot(){
+    var card=document.getElementById('floatCard');
+    if(!card) return;
+    card.addEventListener('mouseenter',fcStop);
+    card.addEventListener('mouseleave',fcStart);
+    fcCur=fcRemaining()[0]||0;
+    fcShow(fcCur);
+    fcStart();
+  }
+  if(document.readyState!=='loading') boot();
+  else document.addEventListener('DOMContentLoaded',boot);
+})();
 
 var phrases=["Create Listings That Convert","Enhance Listing To Rank Higher","Migrate Listing To Outsell Rivals"];
 var bi=0;
