@@ -440,6 +440,114 @@
     .cases-text p { font-size:18px; max-width:92%; }
   }
 
+  /* ===== Migrate section (third floor) ===== */
+  .migrate {
+    position:relative;
+    background:#243242;
+    padding:72px 24px 100px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .migrate-logos {
+    position:relative;
+    height:80px;
+    margin-bottom:34px;
+    overflow:hidden;
+  }
+  .mlogo-pair {
+    position:absolute;
+    top:50%; left:50%;
+    display:flex; align-items:center; gap:10px;
+    transform-origin:center center;
+    transition:transform .8s cubic-bezier(.4,0,.2,1), opacity .8s cubic-bezier(.4,0,.2,1);
+    will-change:transform, opacity;
+  }
+  .mlogo-pair img {
+    width:60px; height:60px; border-radius:14px; display:block;
+  }
+  .migrate h2 {
+    font-family:'Unbounded',sans-serif;
+    font-weight:400;
+    font-size:clamp(30px, 4vw, 46px);
+    line-height:1.12;
+    color:#fff;
+    margin:0 0 10px;
+    letter-spacing:-0.5px;
+  }
+  .migrate h2 .accent { color:#FCCA2E; }
+  .migrate .migrate-sub {
+    font-family:'Graphik RBC',sans-serif;
+    color:rgba(255,255,255,0.72);
+    font-size:clamp(15px, 1.5vw, 18px);
+    line-height:1.5;
+    max-width:620px;
+    margin:0 auto 56px;
+    height:3em;                 /* exactly two lines */
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    overflow:hidden;
+  }
+  .migrate-cards {
+    display:flex; justify-content:center; align-items:flex-start;
+    gap:32px;
+    max-width:1240px; margin:0 auto;
+  }
+  .migrate-cards .reveal-right { margin-top:0; }
+  .migrate-card {
+    flex:1; max-width:590px;
+    border-radius:20px;
+    overflow:hidden;
+    max-height:920px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.35);
+  }
+  .migrate-card img { width:100%; height:auto; display:block; }
+  /* rotating text: fade + slide, like the logos */
+  .migrate-title { display:flex; flex-direction:column; align-items:center; }
+  .mtitle-top {
+    display:block;
+    transition:opacity .45s cubic-bezier(.4,0,.2,1), transform .45s cubic-bezier(.4,0,.2,1);
+  }
+  .mtitle-top.fading { opacity:0; transform:translateY(-16px); }
+  .mtitle-top.enter  { opacity:0; transform:translateY(16px); }
+  /* accent (bottom line) slides horizontally: new comes from left, old exits right */
+  .mtitle-accent-wrap {
+    display:block; position:relative; overflow:hidden;
+    width:100%;
+    min-height:1.3em;
+  }
+  .accent {
+    display:block;
+    position:absolute; left:0; right:0; top:0;
+    text-align:center;
+    white-space:nowrap;
+    transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
+  }
+  /* current centered; leaving slides OUT right; entering starts LEFT then centers */
+  .accent.leave { opacity:0; transform:translateX(80px); }
+  .accent.enter-start { opacity:0; transform:translateX(-80px); }
+  #migrateSub {
+    transition:opacity .45s cubic-bezier(.4,0,.2,1), transform .45s cubic-bezier(.4,0,.2,1);
+  }
+  #migrateSub.fading { opacity:0; transform:translateY(-16px); }
+  #migrateSub.enter  { opacity:0; transform:translateY(16px); }
+  /* scroll reveal for cards: start below + transparent */
+  .migrate-card.reveal-left {
+    opacity:0; transform:translateY(100px);
+    transition:opacity .7s ease-out, transform .7s ease-out;
+  }
+  .migrate-card.reveal-right {
+    opacity:0; transform:translateY(100px);
+    transition:opacity 1.15s ease-out .2s, transform 1.15s ease-out .2s;
+  }
+  .migrate-card.revealed { opacity:1; transform:translateY(0); }
+  @media (max-width:900px) {
+    .migrate-cards { flex-direction:column; align-items:center; gap:24px; }
+    .migrate-cards .reveal-right { margin-top:0; }
+    .migrate-card { max-width:520px; width:100%; }
+    .migrate-logos { gap:24px; flex-wrap:wrap; }
+    .mlogo-pair img { width:38px; height:38px; }
+    .mlogo-pair.active img { width:46px; height:46px; }
+  }
 </style>
 </head>
 <body>
@@ -717,6 +825,27 @@
   </div>
 </section>
 
+<section class="migrate">
+  <div class="migrate-logos" id="migrateLogos"></div>
+
+  <h2 class="migrate-title">
+    <span class="mtitle-top">Listing Migration</span>
+    <span class="mtitle-accent-wrap" id="migrateAccentWrap">
+      <span class="accent accent-cur" id="migrateAccent">From 1688 → To Amazon</span>
+    </span>
+  </h2>
+  <p class="migrate-sub" id="migrateSub">Paste a 1688 link and get a clean, compliant Amazon listing — translated, restyled, and re-shot by AI.</p>
+
+  <div class="migrate-cards">
+    <div class="migrate-card reveal-left">
+      <img src="assets/screen21.png" alt="Migrated Amazon listing" loading="lazy">
+    </div>
+    <div class="migrate-card reveal-right">
+      <img src="assets/screen2.png" alt="Original 1688 listing" loading="lazy">
+    </div>
+  </div>
+</section>
+
 <script>
 function fillAsk(t){
   var i=document.getElementById('askInput');
@@ -899,6 +1028,142 @@ setInterval(function(){
   window.addEventListener('load', buildMarquee);
   var rt;
   window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(buildMarquee,150); });
+})();
+
+/* ===== Migrate: scroll reveal + rotating tandems/text ===== */
+(function(){
+  // 1) Scroll reveal for the two cards
+  var cards=document.querySelectorAll('.migrate-card');
+  if('IntersectionObserver' in window && cards.length){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); }
+      });
+    },{threshold:0.15});
+    cards.forEach(function(c){ io.observe(c); });
+  } else {
+    cards.forEach(function(c){ c.classList.add('revealed'); });
+  }
+
+  // 2) Carousel of logo tandems that physically slide left→right,
+  //    with title/description synced to the centered tandem.
+  var logosEl=document.getElementById('migrateLogos');
+  var accentEl=document.getElementById('migrateAccent');
+  var subEl=document.getElementById('migrateSub');
+  if(!logosEl||!accentEl||!subEl) return;
+
+  var L={
+    '1688':'assets/logo1688.png', amazon:'assets/logoamazon.png',
+    walmart:'assets/logowalmart.png', ali:'assets/logoali.png',
+    ebay:'assets/logoebay.png', etsy:'assets/logoetsy.png'
+  };
+  var TANDEMS=[
+    { a:'1688', b:'amazon',
+      top:'Migrate Any Listing In Minutes', accent:'From 1688 → To Amazon',
+      sub:'Paste a 1688 link and get a clean, compliant Amazon listing — translated, restyled, and re-shot by AI.' },
+    { a:'1688', b:'walmart',
+      top:'Launch On Walmart Without The Grind', accent:'From 1688 → To Walmart',
+      sub:'Drop in a supplier URL and get Walmart-ready titles, specs, and imagery — localized for US buyers.' },
+    { a:'ali', b:'ebay',
+      top:'Cross-List Anywhere In One Click', accent:'From AliExpress → To eBay',
+      sub:'Pull an AliExpress product and publish an eBay-ready listing — copy, photos, and categories handled.' },
+    { a:'1688', b:'etsy',
+      top:'Bring Your Catalog To Etsy', accent:'From 1688 → To Etsy',
+      sub:'Turn wholesale listings into Etsy-style storytelling — warm copy, lifestyle visuals, and smart tags.' },
+    { a:'1688', b:'amazon',
+      top:'Turn Raw Listings Into Best Sellers', accent:'From 1688 → To Amazon',
+      sub:'AI rewrites bullets, cleans attributes, and re-shoots hero images to look native to Amazon from day one.' },
+    { a:'ali', b:'ebay',
+      top:'One Product, Every Marketplace', accent:'From AliExpress → To eBay',
+      sub:'Import once and fan out everywhere — consistent branding and platform-perfect images across channels.' },
+    { a:'1688', b:'walmart',
+      top:'Scale Your Store Without Rewriting', accent:'From 1688 → To Walmart',
+      sub:'Batch-migrate hundreds of SKUs with AI that keeps specs accurate and visuals on-brand — no manual copy-paste.' }
+  ];
+  var N=TANDEMS.length;
+
+  // Visible slots: 0..4. Slot 2 = center (100%), 1&3 = 80%, 0&4 = 60%.
+  // Hidden lanes -1 (fade-in, left) and 5 (fade-out, right).
+  var STEP=200; // px between adjacent slot centers
+  var SLOT={
+    '-1':{s:0.6,o:0}, 0:{s:0.6,o:0.1}, 1:{s:0.8,o:0.3},
+    2:{s:1,o:1}, 3:{s:0.8,o:0.3}, 4:{s:0.6,o:0.1}, 5:{s:0.6,o:0}
+  };
+
+  // Build a DOM node per tandem; assign each a starting slot 0..N-1.
+  var nodes=TANDEMS.map(function(t,i){
+    var d=document.createElement('div');
+    d.className='mlogo-pair';
+    d.innerHTML='<img src="'+L[t.a]+'" alt=""><img src="'+L[t.b]+'" alt="">';
+    logosEl.appendChild(d);
+    return { el:d, slot:i };
+  });
+
+  // Map a raw slot (0..N-1) into the visible window [-1..5] centered on 2.
+  function win(slot){
+    var w=((slot % N)+N)%N;      // 0..N-1
+    if(w>5) w-=N;                // wrap high slots to the left lane
+    return w;                    // now in range roughly [-1..5]
+  }
+  function render(anim){
+    nodes.forEach(function(n){
+      var w=win(n.slot);
+      var jumped = (n.prevW!==undefined) && Math.abs(w - n.prevW) > 1;
+      n.el.style.transition = (anim && !jumped) ? '' : 'none';
+      var cfg=SLOT[w];
+      if(!cfg){ n.el.style.opacity=0; n.prevW=w; return; }
+      var x=(w-2)*STEP;
+      n.el.style.opacity=cfg.o;
+      n.el.style.transform='translate(calc(-50% + '+x+'px), -50%) scale('+cfg.s+')';
+      n.prevW=w;
+    });
+  }
+  function centeredIdx(){
+    for(var i=0;i<nodes.length;i++){ if(win(nodes[i].slot)===2) return i; }
+    return 0;
+  }
+  var accentWrap=document.getElementById('migrateAccentWrap');
+  function setText(i){
+    // --- subtitle: vertical fade ---
+    subEl.classList.add('fading');
+    setTimeout(function(){
+      subEl.classList.remove('fading');
+      subEl.classList.add('enter');
+      subEl.textContent=TANDEMS[i].sub;
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ subEl.classList.remove('enter'); }); });
+    },500);
+
+    // --- accent: old slides out right, new slides in from left, SIMULTANEOUSLY ---
+    var oldEl=accentWrap.querySelector('.accent.accent-cur');
+    var newEl=document.createElement('span');
+    newEl.className='accent accent-cur enter-start';
+    newEl.textContent=TANDEMS[i].accent;
+    accentWrap.appendChild(newEl);
+    // force layout so the enter-start position is applied before transitioning
+    void newEl.offsetWidth;
+    requestAnimationFrame(function(){
+      if(oldEl){ oldEl.classList.remove('accent-cur'); oldEl.classList.add('leave'); }
+      newEl.classList.remove('enter-start'); // slides to center
+    });
+    // cleanup old node after the transition
+    setTimeout(function(){ if(oldEl && oldEl.parentNode) oldEl.parentNode.removeChild(oldEl); },700);
+  }
+
+  render(false);
+  // force reflow so first animated step transitions from the initial state
+  void logosEl.offsetWidth;
+  setText(centeredIdx());
+
+  function step(){
+    // every tandem shifts one slot to the RIGHT → the row slides left→right
+    nodes.forEach(function(n){ n.slot += 1; });
+    render(true);
+    setText(centeredIdx());
+  }
+
+  var timer=setInterval(step,7000);
+  logosEl.addEventListener('mouseenter',function(){ clearInterval(timer); });
+  logosEl.addEventListener('mouseleave',function(){ timer=setInterval(step,7000); });
 })();
 </script>
 </body>
