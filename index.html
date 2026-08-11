@@ -86,6 +86,7 @@
   /* ---- floating close card top-right ---- */
   .float-card {
     position:absolute; top:98px; right:40px;
+    z-index:50;
     width:200px; min-height:140px;
     border:1px solid rgba(255,255,255,0.16);
     border-radius:16px;
@@ -99,6 +100,7 @@
     position:absolute; top:8px; right:10px;
     color:rgba(255,255,255,0.55); font-size:18px; cursor:pointer;
     background:none; border:none; line-height:1; z-index:2;
+    padding:6px; margin:-6px;
   }
   .float-card .x:hover { color:#fff; }
   .fc-slides { position:relative; }
@@ -129,7 +131,7 @@
     flex:1;
     display:flex; flex-direction:column; align-items:center;
     text-align:center;
-    padding-top:130px;
+    padding-top:clamp(12px, 3.5vh, 48px);
   }
   .trusted-label {
     font-size:15px; font-weight:400; color:rgba(255,255,255,0.9);
@@ -143,7 +145,7 @@
   }
 
   .badges {
-    display:flex; gap:22px; margin-top:44px;
+    display:flex; gap:22px; margin-top:clamp(20px, 3.5vh, 44px);
   }
   .badge {
     border:1px solid rgba(255,255,255,0.14);
@@ -159,30 +161,30 @@
 
   h1 {
     font-family:'Unbounded',sans-serif;
-    margin-top:34px;
+    margin-top:clamp(18px, 2.6vh, 34px);
     font-weight:400;
-    font-size:78px;
-    line-height:1.02;
+    font-size:clamp(32px, 3.9vw, 56px);
+    line-height:1.04;
     letter-spacing:-1px;
   }
   h1 .yellow { color:#FCCA2E; }
   h1 .white { color:#fff; }
 
   .subtitle {
-    margin-top:26px;
+    margin-top:clamp(16px, 2vh, 26px);
     max-width:720px;
-    font-size:19px;
+    font-size:clamp(16px, 1.3vw, 19px);
     line-height:1.5;
     font-weight:400;
     color:rgba(255,255,255,0.5);
   }
 
   .cta {
-    margin-top:60px;
+    margin-top:clamp(24px, 4vh, 48px);
     background:#FCCA2E; color:#111;
-    border:none; border-radius:16px;
-    font-family:inherit; font-weight:600; font-size:22px;
-    padding:22px 44px; cursor:pointer;
+    border:none; border-radius:14px;
+    font-family:inherit; font-weight:600; font-size:18px;
+    padding:15px 34px; cursor:pointer;
   }
   .cta:hover { background:#ffd647; }
   .nocard {
@@ -196,7 +198,7 @@
   /* ---- marketplace marquee ---- */
   .marquee {
     margin-top:auto;
-    padding:40px 0 0;
+    padding:40px 0 130px;
     position:relative;
     overflow:hidden;
   }
@@ -229,9 +231,12 @@
   /* ---- ask bar ---- */
   .askbar-wrap {
     display:flex; justify-content:center;
-    margin-top:36px;
-    padding-bottom:24px;
+    position:fixed; left:0; right:0; bottom:0;
+    padding-bottom:20px;
+    z-index:40;
+    pointer-events:none;
   }
+  .askbar-stack { pointer-events:auto; }
   .askbar-stack {
     position:relative;
     display:flex; flex-direction:column; align-items:center;
@@ -266,8 +271,8 @@
     display:flex; align-items:center; gap:12px;
     width:340px;
     border:1px solid rgba(255,255,255,0.14);
-    border-radius:28px;
-    padding:14px 16px;
+    border-radius:24px;
+    padding:9px 9px 9px 18px;
     background:rgba(255,255,255,0.06);
     backdrop-filter:blur(16px) saturate(160%);
     -webkit-backdrop-filter:blur(16px) saturate(160%);
@@ -316,6 +321,67 @@
     .subtitle { font-size:16px; padding:0 20px; }
     .cta { font-size:18px; padding:18px 32px; }
   }
+
+  /* ===== Cases section ===== */
+  .cases {
+    position:relative;
+    width:100%;
+    min-height:100vh;
+    background:#0b0f14;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .cases-collage {
+    position:absolute; inset:0;
+    background-image:url('assets/bgcases.jpg');
+    background-size:cover;
+    background-position:center top;
+    background-repeat:no-repeat;
+  }
+  /* dark edges so text area reads and collage fades at borders */
+  .cases::after {
+    content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:
+      radial-gradient(120% 80% at 50% 50%, transparent 40%, rgba(11,15,20,0.35) 100%),
+      linear-gradient(180deg, rgba(11,15,20,0.55) 0%, transparent 18%, transparent 82%, rgba(11,15,20,0.75) 100%);
+  }
+  .cases-ellipse {
+    position:relative; z-index:2;
+    width:min(760px, 86vw);
+    aspect-ratio:1.15 / 1;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center;
+    padding:0 8%;
+    border-radius:50%;
+    background:rgba(255,255,255,0.5);
+    backdrop-filter:blur(28px) saturate(120%);
+    -webkit-backdrop-filter:blur(28px) saturate(120%);
+    box-shadow:0 20px 80px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .cases-ellipse h2 {
+    font-family:'Unbounded',sans-serif;
+    font-weight:500;
+    color:#111;
+    font-size:clamp(28px, 3.6vw, 52px);
+    line-height:1.08;
+    letter-spacing:-1px;
+    margin-bottom:20px;
+  }
+  .cases-ellipse p {
+    color:#222;
+    font-size:clamp(16px, 1.5vw, 22px);
+    line-height:1.45;
+    max-width:70%;
+    font-weight:400;
+  }
+  @media (max-width:700px) {
+    .cases-ellipse { aspect-ratio:1 / 1; padding:0 6%; }
+    .cases-ellipse p { max-width:88%; }
+  }
+
 </style>
 </head>
 <body>
@@ -468,8 +534,7 @@
     </h1>
 
     <p class="subtitle">
-      Enter Listing Link — get data-driven gallery images, infographics, A+ content, and
-      copy — all made to convert. Powered by the newest AI models, always up to date.
+      Get data-driven gallery images, infographics, A+ content, and copy — all made to perform. Powered by the newest AI models, always up to date.
     </p>
 
     <button class="cta">Start Free. Launch Today</button>
@@ -573,6 +638,15 @@
   </section>
 
 </div>
+
+<section class="cases">
+  <div class="cases-collage"></div>
+  <div class="cases-ellipse">
+    <h2>Convert More,<br>Not Just Look Nice</h2>
+    <p>Content engineered around what buyers actually click and buy</p>
+  </div>
+</section>
+
 <script>
 function fillAsk(t){
   var i=document.getElementById('askInput');
@@ -668,13 +742,11 @@ setInterval(function(){
     var logos=Array.prototype.slice.call(tpl.querySelectorAll('svg'));
     if(!logos.length) return;
     track.innerHTML='';
-    // one "unit" = the 7 logos; keep adding units until unit width >= viewport, then duplicate the whole thing once
     var vw=window.innerWidth;
-    // build a single unit, measure, repeat unit until >= vw + one extra for safety
     function appendUnit(container){
       logos.forEach(function(svg){ container.appendChild(svg.cloneNode(true)); });
     }
-    // temp measure one unit
+    // measure one unit
     var probe=document.createElement('div');
     probe.style.cssText='position:absolute;visibility:hidden;display:flex;';
     document.body.appendChild(probe);
@@ -682,19 +754,18 @@ setInterval(function(){
     probe.querySelectorAll('svg').forEach(function(s){s.style.marginRight='50px';});
     var unitW=probe.getBoundingClientRect().width;
     document.body.removeChild(probe);
-    var unitsNeeded=Math.max(1, Math.ceil((vw+unitW)/unitW)); // half-track >= viewport
-    var half=document.createDocumentFragment();
+    // DOUBLE safety margin: each half must be at least 2x the viewport wide.
+    // This guarantees the track always overfills the screen at any scroll offset.
+    var unitsNeeded=Math.max(2, Math.ceil((2*vw)/unitW)+1);
     var halfWrap=document.createElement('span');
     halfWrap.style.cssText='display:flex;align-items:center;flex-shrink:0;';
     for(var u=0; u<unitsNeeded; u++) appendUnit(halfWrap);
-    // duplicate half -> two identical halves => -50% seamless
     var h1=halfWrap.cloneNode(true);
     var h2=halfWrap.cloneNode(true);
     track.appendChild(h1);
     track.appendChild(h2);
-    // apply margins to all svgs uniformly
     track.querySelectorAll('svg').forEach(function(s){s.style.marginRight='50px';s.style.flexShrink='0';});
-    // remove trailing margin on the last logo of each half so the seam equals the internal 50px gap
+    // seam gap == internal gap: drop trailing margin on last logo of each half
     [h1,h2].forEach(function(half){
       var ss=half.querySelectorAll('svg');
       if(ss.length) ss[ss.length-1].style.marginRight='0px';
@@ -702,8 +773,10 @@ setInterval(function(){
   }
   function init(){ buildMarquee(); }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
+  // rebuild once everything (fonts/SVG) is fully laid out — measurements are exact then
+  window.addEventListener('load', buildMarquee);
   var rt;
-  window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(buildMarquee,200); });
+  window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(buildMarquee,150); });
 })();
 </script>
 </body>
