@@ -167,10 +167,12 @@
     display:flex; gap:22px; margin-top:clamp(20px, 3.5vh, 44px);
   }
   .badge {
+    height:40px;
+    display:inline-flex; align-items:center;
     border:1px solid rgba(255,255,255,0.14);
-    border-radius:30px;
-    padding:15px 28px;
-    font-size:17px; font-weight:400;
+    border-radius:999px;
+    padding:0 24px;
+    font-size:16px; font-weight:400;
     color:rgba(255,255,255,0.92);
     background:rgba(255,255,255,0.05);
     backdrop-filter:blur(14px) saturate(160%);
@@ -220,19 +222,16 @@
     padding:40px 0 130px;
     position:relative;
     overflow:hidden;
-  }
-  /* Safari fallback: overlay gradients matching that area's dark tone */
-  .marquee::before, .marquee::after {
-    content:""; position:absolute; top:0; bottom:0; width:20%;
-    z-index:2; pointer-events:none;
-  }
-  .marquee::before {
-    left:0;
-    background:linear-gradient(90deg, rgb(13,17,23) 0%, rgb(13,17,23) 30%, rgba(13,17,23,0) 100%);
-  }
-  .marquee::after {
-    right:0;
-    background:linear-gradient(270deg, rgb(13,17,23) 0%, rgb(13,17,23) 30%, rgba(13,17,23,0) 100%);
+    -webkit-mask-image:linear-gradient(90deg,
+      transparent 0%,
+      rgba(0,0,0,1) 22%,
+      rgba(0,0,0,1) 78%,
+      transparent 100%);
+    mask-image:linear-gradient(90deg,
+      transparent 0%,
+      rgba(0,0,0,1) 22%,
+      rgba(0,0,0,1) 78%,
+      transparent 100%);
   }
   .marquee-track {
     display:flex; align-items:center; gap:50px;
@@ -267,7 +266,7 @@
     transform:translateX(-50%) translateY(6px);
     margin-bottom:12px;
     display:flex; flex-direction:column; gap:8px;
-    align-items:stretch; width:340px;
+    align-items:flex-start; width:340px; max-width:90vw;
     opacity:0;
     pointer-events:none;
     transition:opacity .25s ease, transform .25s ease;
@@ -275,12 +274,15 @@
   }
   .ask-chips.show { opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
   .ask-chip {
+    height:40px;
+    display:inline-flex; align-items:center;
     background:rgba(255,255,255,0.08);
     border:1px solid rgba(255,255,255,0.16);
     color:rgba(255,255,255,0.9);
     font-family:inherit; font-size:15px; font-weight:500;
-    padding:13px 20px; border-radius:16px; cursor:pointer;
-    text-align:left; transition:background .2s;
+    padding:0 20px; border-radius:999px; cursor:pointer;
+    white-space:nowrap;
+    text-align:center; transition:background .2s;
     backdrop-filter:blur(14px) saturate(160%);
     -webkit-backdrop-filter:blur(14px) saturate(160%);
     box-shadow:inset 0 1px 0 rgba(255,255,255,0.2);
@@ -290,19 +292,20 @@
     display:flex; align-items:center; gap:12px;
     width:340px;
     border:1px solid rgba(255,255,255,0.14);
-    border-radius:24px;
+    border-radius:999px;
     padding:9px 9px 9px 18px;
     background:rgba(255,255,255,0.06);
     backdrop-filter:blur(16px) saturate(160%);
     -webkit-backdrop-filter:blur(16px) saturate(160%);
     box-shadow:inset 0 1px 0 rgba(255,255,255,0.2);
-    transition:width .25s ease, border-color .2s ease, box-shadow .2s ease;
+    transition:width .25s ease, border-color .2s ease, border-width .2s ease, padding .2s ease, box-shadow .2s ease;
   }
   .askbar.focused {
     width:420px;
-    border:2px solid #4aa8ff;
-    padding:13px 15px;
-    box-shadow:0 0 0 4px rgba(74,168,255,0.12);
+    border-width:2px;
+    border-color:#4aa8ff;
+    padding:8px 8px 8px 17px;
+    box-shadow:0 0 0 4px rgba(74,168,255,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
   }
   .askbar .plus { color:rgba(255,255,255,0.6); font-size:20px; }
   .askbar input {
@@ -316,7 +319,11 @@
     display:flex; align-items:center; justify-content:center;
     opacity:0.35; transition:opacity .2s ease;
   }
+  .askbar .send circle { transition:fill .2s ease; }
+  .askbar .send path { transition:stroke .2s ease; }
   .askbar .send.active { opacity:1; }
+  .askbar .send.active circle { fill:#000; }
+  .askbar .send.active path { stroke:#fff; }
   .askbar .send.active:hover { opacity:0.85; }
 
 
@@ -358,6 +365,13 @@
     background-size:cover;
     background-position:center top;
     background-repeat:no-repeat;
+  }
+  /* dark frame overlaid on top of the background, does not affect it */
+  .cases-frame {
+    position:absolute; inset:38px; z-index:2; pointer-events:none;
+    border-radius:60px;
+    corner-shape:squircle;
+    box-shadow:0 0 0 2000px #232F3E;
   }
   /* dark edges so text area reads and collage fades at borders */
   .cases::after {
@@ -695,6 +709,7 @@
 
 <section class="cases">
   <div class="cases-collage"></div>
+  <div class="cases-frame"></div>
   <div class="glass-ellipse"></div>
   <div class="cases-text">
     <h2>Convert More,<br>Not Just Look Nice</h2>
@@ -748,6 +763,13 @@ function hideChips(){
     showChips();
   });
   inp.addEventListener('focus',showChips);
+  // ESC collapses the bar and removes the caret
+  inp.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      hideChips();
+      inp.blur();
+    }
+  });
   // Hide only when focus/click leaves the whole ask stack
   document.addEventListener('mousedown',function(e){
     if(!e.target.closest('.askbar-stack')) hideChips();
