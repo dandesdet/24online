@@ -252,7 +252,7 @@
     display:flex; justify-content:center;
     position:fixed; left:0; right:0; bottom:0;
     padding-bottom:20px;
-    z-index:40;
+    z-index:9999;
     pointer-events:none;
   }
   .askbar-stack { pointer-events:auto; }
@@ -670,23 +670,27 @@
 </svg></div><div class="marquee-track" id="mqTrack"></div>
     </div>
 
-    <div class="askbar-wrap">
-      <div class="askbar-stack">
-        <div class="ask-chips" id="askChips"></div>
-        <div class="askbar" id="askbar">
-          <span class="plus">+</span>
-          <input type="text" id="askInput" placeholder="Ask me anything."
-                 oninput="document.querySelector('.askbar .send').classList.toggle('active', this.value.trim().length>0)">
-          <button class="send"><svg style="width:30px;height:30px;display:block" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="14.5519" cy="14.5519" r="14.5519" fill="#838383"/>
-<path d="M14.9619 20.0292V9.50537" stroke="#CACACA" stroke-width="1.63965"/>
-<path d="M10 14.4016L14.9622 9.43937L19.9245 14.4016" stroke="#CACACA" stroke-width="1.63965"/>
-</svg></button>
         </div>
       </div>
     </div>
   </section>
 
+</div>
+
+<div class="askbar-wrap">
+  <div class="askbar-stack">
+    <div class="ask-chips" id="askChips"></div>
+    <div class="askbar" id="askbar">
+      <span class="plus">+</span>
+      <input type="text" id="askInput" placeholder="Ask me anything."
+             oninput="document.querySelector('.askbar .send').classList.toggle('active', this.value.trim().length>0)">
+      <button class="send"><svg style="width:30px;height:30px;display:block" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="14.5519" cy="14.5519" r="14.5519" fill="#838383"/>
+<path d="M14.9619 20.0292V9.50537" stroke="#CACACA" stroke-width="1.63965"/>
+<path d="M10 14.4016L14.9622 9.43937L19.9245 14.4016" stroke="#CACACA" stroke-width="1.63965"/>
+</svg></button>
+    </div>
+  </div>
 </div>
 
 <section class="cases">
