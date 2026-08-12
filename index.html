@@ -347,6 +347,15 @@
   .askbar.on-light input { color:rgba(0,0,0,0.85); }
   .askbar.on-light input::placeholder { color:rgba(0,0,0,0.5); }
   .askbar.on-light.focused { border-color:#4aa8ff; }
+  .askbar.on-yellow {
+    border-color:#000;
+    background:transparent;
+    box-shadow:none;
+  }
+  .askbar.on-yellow .plus { color:rgba(0,0,0,0.5); }
+  .askbar.on-yellow input { color:rgba(0,0,0,0.5); }
+  .askbar.on-yellow input::placeholder { color:rgba(0,0,0,0.5); }
+  .askbar.on-yellow.focused { border-color:#000; }
   .askbar .send {
     border:none; background:none; padding:0; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
@@ -1139,6 +1148,196 @@
     .wg-card { padding:36px 26px 56px; }
   }
   /* ===== Powered by AI models section (eleventh floor) ===== */
+  /* ---- founders ---- */
+  .founders {
+    position:relative;
+    background:#ffffff;
+    padding:90px 40px 110px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .founders-avatars {
+    display:flex; justify-content:center;
+    margin-bottom:44px;
+  }
+  .founders-avatars .av {
+    width:118px; height:118px; border-radius:50%;
+    overflow:hidden;
+    object-fit:cover;
+    display:block;
+  }
+  .founders-avatars .av:nth-child(2) { margin-left:-26px; }
+  .founders h2 {
+    font-family:'Unbounded',sans-serif;
+    font-weight:500;
+    color:#0b1016;
+    font-size:clamp(30px, 4.2vw, 56px);
+    line-height:1.1; letter-spacing:-1px;
+    margin:0 auto 28px;
+    max-width:1100px;
+  }
+  .founders-sub {
+    font-family:'Graphik RBC',sans-serif;
+    color:#333;
+    font-size:clamp(15px,1.5vw,18px); line-height:1.6;
+    max-width:820px; margin:0 auto 46px;
+  }
+  .founders-sub a {
+    color:#0b1016; text-decoration:underline;
+    text-underline-offset:2px;
+  }
+  .founders-links {
+    display:flex; justify-content:center; flex-wrap:wrap;
+    gap:16px;
+  }
+  .founders-link {
+    display:inline-flex; align-items:center; gap:10px;
+    padding:11px 20px 11px 12px;
+    border:1.5px solid rgba(17,24,32,0.55);
+    border-radius:100px;
+    font-family:'Graphik RBC',sans-serif;
+    font-weight:500; font-size:16px; line-height:1;
+    color:#0b1016; text-decoration:none;
+    transition:background .16s ease, border-color .16s ease;
+  }
+  .founders-link:hover { background:#f2f3f5; border-color:#111820; }
+  .founders-link .li-ico { width:22px; height:22px; display:block; flex-shrink:0; }
+  @media (max-width:600px) {
+    .founders { padding:64px 20px 80px; }
+    .founders-avatars .av { width:92px; height:92px; }
+    .founders-links { gap:12px; }
+    .founders-link { font-size:14px; padding:9px 16px 9px 10px; }
+  }
+
+  /* ---- final CTA ---- */
+  .fcta {
+    position:relative;
+    background:#FCCA2E;
+    padding:0 40px 110px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .fcta-cards {
+    display:flex; justify-content:center; align-items:flex-start;
+    margin:0 auto 8px;
+    padding-top:70px;
+    height:340px;
+  }
+  .fcta-card {
+    width:220px; height:220px;
+    border-radius:16px;
+    overflow:hidden;
+    background:#fff;
+    border:4px solid #fff;
+    box-shadow:0 4.23px 4.23px 0 rgba(0,0,0,0.10);
+  }
+  .fcta-card img { width:100%; height:100%; object-fit:cover; display:block; border-radius:12px; }
+  .fcta-card.c-left  { transform:rotate(-9deg) translateY(24px); z-index:1; }
+  .fcta-card.c-mid   { transform:translateY(-10px) scale(1.06); z-index:3; margin:0 -18px; }
+  .fcta-card.c-right { transform:rotate(9deg) translateY(24px); z-index:1; }
+  .fcta h2 {
+    font-family:'Unbounded',sans-serif;
+    font-weight:500;
+    color:#111;
+    font-size:clamp(34px, 5vw, 66px);
+    line-height:1.06; letter-spacing:-1.5px;
+    margin:0 auto 22px;
+    max-width:900px;
+  }
+  .fcta-sub {
+    font-family:'Graphik RBC',sans-serif;
+    color:#3a3212;
+    font-size:clamp(15px,1.5vw,18px);
+    margin:0 auto 44px;
+  }
+  .fcta-btns {
+    display:flex; justify-content:center; gap:16px; flex-wrap:wrap;
+  }
+  .fcta-btn {
+    font-family:'Graphik RBC',sans-serif;
+    font-weight:500; font-size:18px;
+    padding:18px 46px;
+    border-radius:100px;
+    cursor:pointer; text-decoration:none;
+    border:none;
+    transition:transform .16s ease, opacity .16s ease;
+  }
+  .fcta-btn.primary { background:#0b1016; color:#fff; }
+  .fcta-btn.secondary { background:#fff; color:#0b1016; }
+  .fcta-btn:hover { transform:translateY(-2px); opacity:0.92; }
+  @media (max-width:600px) {
+    .fcta { padding:0 20px 70px; }
+    .fcta-cards { height:230px; padding-top:44px; }
+    .fcta-card { width:140px; height:140px; }
+    .fcta-card.c-mid { margin:0 -10px; }
+    .fcta-btn { font-size:16px; padding:15px 34px; }
+  }
+
+  /* ---- FAQ ---- */
+  .faq {
+    position:relative;
+    background:#232F3E;
+    padding:100px 40px 120px;
+    overflow:hidden;
+  }
+  .faq-inner {
+    max-width:1300px; margin:0 auto;
+    display:grid;
+    grid-template-columns:minmax(260px, 1fr) minmax(0, 1.5fr);
+    gap:60px;
+    align-items:start;
+  }
+  .faq h2 {
+    font-family:'Unbounded',sans-serif;
+    font-weight:400;
+    color:#fff;
+    font-size:clamp(28px, 3vw, 40px);
+    line-height:1.16; letter-spacing:-0.5px;
+    margin:6px 0 0;
+  }
+  .faq-list { display:flex; flex-direction:column; gap:16px; }
+  .faq-item {
+    background:rgba(255,255,255,0.05);
+    border-radius:18px;
+    overflow:hidden;
+    transition:background .2s ease;
+  }
+  .faq-item.open { background:rgba(255,255,255,0.07); }
+  .faq-q {
+    display:flex; align-items:center; justify-content:space-between;
+    gap:20px;
+    padding:26px 30px;
+    cursor:pointer;
+    font-family:'Graphik RBC',sans-serif;
+    font-size:clamp(16px,1.3vw,18px);
+    color:rgba(255,255,255,0.95);
+    user-select:none;
+  }
+  .faq-chevron {
+    width:20px; height:12px; flex-shrink:0;
+    transition:transform .25s ease;
+    transform:rotate(180deg);
+  }
+  .faq-item.open .faq-chevron { transform:rotate(0deg); }
+  .faq-a {
+    max-height:0; opacity:0;
+    overflow:hidden;
+    padding:0 30px;
+    font-family:'Graphik RBC',sans-serif;
+    font-size:clamp(15px,1.2vw,17px);
+    line-height:1.55;
+    color:rgba(255,255,255,0.7);
+    transition:max-height .3s ease, opacity .25s ease, padding .3s ease;
+  }
+  .faq-item.open .faq-a {
+    max-height:300px; opacity:1;
+    padding:0 30px 28px;
+  }
+  @media (max-width:820px) {
+    .faq-inner { grid-template-columns:1fr; gap:32px; }
+    .faq { padding:70px 20px 90px; }
+  }
+
   .models {
     position:relative;
     background:#151b22;
@@ -1178,6 +1377,156 @@
     .model-item { width:100px; }
     .model-item img { width:60px; height:60px; }
     .model-item span { font-size:14px; }
+  }
+
+  /* ---- pricing ---- */
+  .pricing {
+    position:relative;
+    background:#243242;
+    padding:96px 40px 120px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .pricing h2 {
+    font-family:'Unbounded',sans-serif;
+    font-weight:400;
+    color:#fff;
+    font-size:clamp(28px, 3.6vw, 50px);
+    line-height:1.14; letter-spacing:-0.5px;
+    margin:0 0 56px;
+  }
+  .pr-compare {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    max-width:1160px;
+    margin:0 auto 24px;
+  }
+  .pr-cmp-card {
+    border-radius:16px;
+    padding:44px 48px;
+    text-align:left;
+    background:rgba(255,255,255,0.045);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(6px);
+  }
+  .pr-cmp-card.right {
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center;
+    gap:14px;
+  }
+  .pr-row {
+    display:flex; align-items:baseline;
+    gap:14px;
+    padding:14px 0;
+    font-family:'Graphik RBC',sans-serif;
+    font-size:clamp(17px,1.5vw,22px);
+    color:rgba(255,255,255,0.92);
+  }
+  .pr-row .lbl { white-space:nowrap; }
+  .pr-row .dots {
+    flex:1;
+    border-bottom:1px dashed rgba(255,255,255,0.22);
+    transform:translateY(-4px);
+  }
+  .pr-row .val { white-space:nowrap; font-weight:500; }
+  .pr-row.total { font-weight:700; color:#fff; padding-top:20px; }
+  .pr-row.total .dots { border-bottom-color:rgba(255,255,255,0.4); }
+  .pr-cmp-card.right .way {
+    font-family:'Graphik RBC',sans-serif;
+    font-weight:600; font-size:20px; color:#fff;
+  }
+  .pr-cmp-card.right .big {
+    font-family:'Unbounded',sans-serif;
+    font-weight:400; letter-spacing:-1px;
+    font-size:clamp(48px,6vw,76px);
+    color:#fff; line-height:1;
+    margin:8px 0 4px;
+  }
+  .pr-cmp-card.right .was {
+    font-size:clamp(20px,2.4vw,30px);
+    color:rgba(255,255,255,0.4);
+    text-decoration:line-through;
+  }
+  .pr-cmp-card.right .tag {
+    font-size:clamp(17px,1.5vw,22px);
+    color:rgba(255,255,255,0.85);
+    margin-top:8px;
+  }
+  .pr-plans {
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:20px;
+    max-width:1160px;
+    margin:0 auto;
+  }
+  .pr-plan {
+    background:#fff;
+    color:#0b1016;
+    border-radius:16px;
+    padding:26px 22px 22px;
+    text-align:left;
+    display:flex; flex-direction:column;
+    border:2px solid transparent;
+    position:relative;
+  }
+  .pr-plan.best { border-color:#FCCA2E; }
+  .pr-plan .pl-name {
+    font-family:'Graphik RBC',sans-serif;
+    font-weight:600; font-size:20px;
+    margin-bottom:8px;
+    min-height:26px;
+  }
+  .pr-plan .pl-price {
+    font-family:'Graphik RBC',sans-serif;
+    font-weight:700; font-size:26px;
+    margin-bottom:20px;
+    min-height:34px;
+  }
+  .pr-plan .pl-price .per {
+    font-weight:400; font-size:14px;
+    color:rgba(11,16,22,0.55);
+  }
+  .pr-plan .pl-price.custom { font-size:22px; line-height:1.2; }
+  .pr-plan .pl-btn {
+    background:#111820; color:#fff;
+    border:none; border-radius:9px;
+    padding:12px 16px;
+    font-family:'Graphik RBC',sans-serif;
+    font-weight:600; font-size:14px;
+    cursor:pointer; text-align:center;
+    transition:background .18s ease;
+  }
+  .pr-plan .pl-btn:hover { background:#000; }
+  .pr-plan .pl-credits {
+    margin-top:14px;
+    font-family:'Graphik RBC',sans-serif;
+    font-weight:600; font-size:13px;
+    color:#0b1016;
+  }
+  .pr-plan .pl-credits .extra { color:#E0A400; }
+  .pr-plan .pl-trusted {
+    margin-top:14px;
+    font-size:12px;
+    color:rgba(11,16,22,0.45);
+    text-align:center;
+  }
+  .pr-badge {
+    position:absolute; top:16px; right:16px;
+    background:#FCCA2E; color:#0b1016;
+    font-family:'Graphik RBC',sans-serif;
+    font-weight:600; font-size:11px;
+    padding:4px 10px; border-radius:20px;
+  }
+  @media (max-width:900px) {
+    .pr-compare { grid-template-columns:1fr; }
+    .pr-plans { grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:520px) {
+    .pricing { padding:64px 20px 80px; }
+    .pr-cmp-card { padding:32px 26px; }
+    .pr-plans { grid-template-columns:1fr; }
   }
 </style>
 </head>
@@ -1691,6 +2040,148 @@
   </div>
 </section>
 
+<section class="pricing">
+  <h2>What Great Content Costs You Today</h2>
+
+  <div class="pr-compare">
+    <div class="pr-cmp-card left">
+      <div class="pr-row"><span class="lbl">Photographer</span><span class="dots"></span><span class="val">$2-4K</span></div>
+      <div class="pr-row"><span class="lbl">Copywriter</span><span class="dots"></span><span class="val">$1-2K</span></div>
+      <div class="pr-row"><span class="lbl">Designer</span><span class="dots"></span><span class="val">$2-3K</span></div>
+      <div class="pr-row"><span class="lbl">Agency Retainer</span><span class="dots"></span><span class="val">$5-8K</span></div>
+      <div class="pr-row total"><span class="lbl">Total</span><span class="dots"></span><span class="val">~$15K/mo</span></div>
+    </div>
+    <div class="pr-cmp-card right">
+      <div class="way">The 24.online way</div>
+      <div class="big">$19/mo</div>
+      <div class="was">$15 000/mo</div>
+      <div class="tag">Same output. Minutes, not weeks.</div>
+    </div>
+  </div>
+
+  <div class="pr-plans">
+    <div class="pr-plan">
+      <div class="pl-name">Free</div>
+      <div class="pl-price">$0 <span class="per">/mo</span></div>
+      <button class="pl-btn">Get started</button>
+      <div class="pl-credits">300 credits</div>
+    </div>
+    <div class="pr-plan">
+      <div class="pl-name">Basic</div>
+      <div class="pl-price">$19 <span class="per">/mo</span></div>
+      <button class="pl-btn">Choose plan</button>
+      <div class="pl-credits">1900 credits <span class="extra">+ 900 extra *</span></div>
+    </div>
+    <div class="pr-plan best">
+      <span class="pr-badge">Best value</span>
+      <div class="pl-name">Plus</div>
+      <div class="pl-price">$39 <span class="per">/mo</span></div>
+      <button class="pl-btn">Choose plan</button>
+      <div class="pl-credits">3900 credits <span class="extra">+ 1900 extra *</span></div>
+    </div>
+    <div class="pr-plan">
+      <div class="pl-name">Pro</div>
+      <div class="pl-price">$149 <span class="per">/mo</span></div>
+      <button class="pl-btn">Choose plan</button>
+      <div class="pl-credits">14900 credits <span class="extra">+ 9900 extra *</span></div>
+    </div>
+    <div class="pr-plan">
+      <div class="pl-name">Enterprise</div>
+      <div class="pl-price custom">Custom</div>
+      <button class="pl-btn">Contact us</button>
+      <div class="pl-trusted">Trusted by leading brands</div>
+    </div>
+  </div>
+</section>
+
+<section class="founders light-section">
+  <div class="founders-avatars">
+    <img class="av" src="assets/founder1.png" alt="Yury Shishkin">
+    <img class="av" src="assets/founder2.png" alt="Vitaly Tsoy">
+  </div>
+  <h2>From Founders With A $5M Ecommerce Exit Behind It</h2>
+  <p class="founders-sub">We both have 10+ years in e-commerce, with clients across Europe, Asia, and the UAE. We built 24.online because we've lived the problem: content makes or breaks a listing. And having built and successfully exited an AI startup in 2024 (<a href="https://24ai.tech" target="_blank" rel="noopener">24ai.tech</a>), we know how to focus on the features and services that actually matter.</p>
+  <div class="founders-links">
+    <a class="founders-link" href="https://www.linkedin.com/company/24-online/" target="_blank" rel="noopener">
+      <svg class="li-ico" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.3838 0C19.8684 0 21.8828 2.01439 21.8828 4.49902V17.3838C21.8828 19.8684 19.8684 21.8828 17.3838 21.8828H4.49902C2.01439 21.8828 0 19.8684 0 17.3838V4.49902C0 2.01439 2.01439 0 4.49902 0H17.3838ZM14.1279 8.53613C13.7945 8.53181 13.4619 8.57723 13.1416 8.66992C12.8452 8.75873 12.5957 8.88395 12.3926 9.04492C12.1893 9.2053 12.0267 9.3544 11.9062 9.49219C11.7921 9.62281 11.6807 9.7744 11.5713 9.94629V8.73535H8.73828L8.74707 9.14844C8.75083 9.42399 8.75293 10.2734 8.75293 11.6963C8.75293 13.1193 8.74762 14.9763 8.73633 17.2666H11.5713V12.5068C11.5639 12.2706 11.5956 12.0345 11.665 11.8086C11.781 11.5208 11.9688 11.2673 12.2109 11.0732C12.4555 10.8753 12.7589 10.7765 13.1201 10.7764C13.6133 10.7764 13.9761 10.947 14.208 11.2881C14.4414 11.6306 14.5586 12.1028 14.5586 12.7051V17.2676H17.3896L17.3906 12.377C17.3906 11.1203 17.0922 10.1657 16.4951 9.51367C15.8988 8.86238 15.1098 8.53613 14.1279 8.53613ZM4.3291 8.73633V17.2666H7.16992V8.73633H4.3291ZM5.7666 4.62891C5.29018 4.62899 4.90422 4.76837 4.6084 5.04688C4.31327 5.32546 4.16504 5.67692 4.16504 6.10156C4.16019 6.29686 4.19645 6.4911 4.27051 6.67188C4.34458 6.85265 4.45521 7.01659 4.5957 7.15234C4.88255 7.43307 5.26193 7.57324 5.73242 7.57324H5.74902C6.23085 7.57323 6.62013 7.43315 6.91602 7.15234C7.17497 6.90525 7.31798 6.60578 7.3457 6.25488L7.35156 6.10156C7.34403 5.67697 7.19716 5.32544 6.91113 5.04688C6.62502 4.76829 6.24321 4.62891 5.7666 4.62891Z" fill="#131313"/></svg>
+      24.online
+    </a>
+    <a class="founders-link" href="https://www.linkedin.com/in/shishkiny/" target="_blank" rel="noopener">
+      <svg class="li-ico" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.3838 0C19.8684 0 21.8828 2.01439 21.8828 4.49902V17.3838C21.8828 19.8684 19.8684 21.8828 17.3838 21.8828H4.49902C2.01439 21.8828 0 19.8684 0 17.3838V4.49902C0 2.01439 2.01439 0 4.49902 0H17.3838ZM14.1279 8.53613C13.7945 8.53181 13.4619 8.57723 13.1416 8.66992C12.8452 8.75873 12.5957 8.88395 12.3926 9.04492C12.1893 9.2053 12.0267 9.3544 11.9062 9.49219C11.7921 9.62281 11.6807 9.7744 11.5713 9.94629V8.73535H8.73828L8.74707 9.14844C8.75083 9.42399 8.75293 10.2734 8.75293 11.6963C8.75293 13.1193 8.74762 14.9763 8.73633 17.2666H11.5713V12.5068C11.5639 12.2706 11.5956 12.0345 11.665 11.8086C11.781 11.5208 11.9688 11.2673 12.2109 11.0732C12.4555 10.8753 12.7589 10.7765 13.1201 10.7764C13.6133 10.7764 13.9761 10.947 14.208 11.2881C14.4414 11.6306 14.5586 12.1028 14.5586 12.7051V17.2676H17.3896L17.3906 12.377C17.3906 11.1203 17.0922 10.1657 16.4951 9.51367C15.8988 8.86238 15.1098 8.53613 14.1279 8.53613ZM4.3291 8.73633V17.2666H7.16992V8.73633H4.3291ZM5.7666 4.62891C5.29018 4.62899 4.90422 4.76837 4.6084 5.04688C4.31327 5.32546 4.16504 5.67692 4.16504 6.10156C4.16019 6.29686 4.19645 6.4911 4.27051 6.67188C4.34458 6.85265 4.45521 7.01659 4.5957 7.15234C4.88255 7.43307 5.26193 7.57324 5.73242 7.57324H5.74902C6.23085 7.57323 6.62013 7.43315 6.91602 7.15234C7.17497 6.90525 7.31798 6.60578 7.3457 6.25488L7.35156 6.10156C7.34403 5.67697 7.19716 5.32544 6.91113 5.04688C6.62502 4.76829 6.24321 4.62891 5.7666 4.62891Z" fill="#131313"/></svg>
+      Yury Shishkin
+    </a>
+    <a class="founders-link" href="https://www.linkedin.com/in/vitalytsoy/" target="_blank" rel="noopener">
+      <svg class="li-ico" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.3838 0C19.8684 0 21.8828 2.01439 21.8828 4.49902V17.3838C21.8828 19.8684 19.8684 21.8828 17.3838 21.8828H4.49902C2.01439 21.8828 0 19.8684 0 17.3838V4.49902C0 2.01439 2.01439 0 4.49902 0H17.3838ZM14.1279 8.53613C13.7945 8.53181 13.4619 8.57723 13.1416 8.66992C12.8452 8.75873 12.5957 8.88395 12.3926 9.04492C12.1893 9.2053 12.0267 9.3544 11.9062 9.49219C11.7921 9.62281 11.6807 9.7744 11.5713 9.94629V8.73535H8.73828L8.74707 9.14844C8.75083 9.42399 8.75293 10.2734 8.75293 11.6963C8.75293 13.1193 8.74762 14.9763 8.73633 17.2666H11.5713V12.5068C11.5639 12.2706 11.5956 12.0345 11.665 11.8086C11.781 11.5208 11.9688 11.2673 12.2109 11.0732C12.4555 10.8753 12.7589 10.7765 13.1201 10.7764C13.6133 10.7764 13.9761 10.947 14.208 11.2881C14.4414 11.6306 14.5586 12.1028 14.5586 12.7051V17.2676H17.3896L17.3906 12.377C17.3906 11.1203 17.0922 10.1657 16.4951 9.51367C15.8988 8.86238 15.1098 8.53613 14.1279 8.53613ZM4.3291 8.73633V17.2666H7.16992V8.73633H4.3291ZM5.7666 4.62891C5.29018 4.62899 4.90422 4.76837 4.6084 5.04688C4.31327 5.32546 4.16504 5.67692 4.16504 6.10156C4.16019 6.29686 4.19645 6.4911 4.27051 6.67188C4.34458 6.85265 4.45521 7.01659 4.5957 7.15234C4.88255 7.43307 5.26193 7.57324 5.73242 7.57324H5.74902C6.23085 7.57323 6.62013 7.43315 6.91602 7.15234C7.17497 6.90525 7.31798 6.60578 7.3457 6.25488L7.35156 6.10156C7.34403 5.67697 7.19716 5.32544 6.91113 5.04688C6.62502 4.76829 6.24321 4.62891 5.7666 4.62891Z" fill="#131313"/></svg>
+      Vitaly Tsoy
+    </a>
+  </div>
+</section>
+
+<section class="fcta">
+  <div class="fcta-cards">
+    <div class="fcta-card c-left"><img src="assets/cta_strawberry.jpg" alt="Strawberry listing"></div>
+    <div class="fcta-card c-mid"><img src="assets/cta_chupa.jpg" alt="Chupa Chups listing"></div>
+    <div class="fcta-card c-right"><img src="assets/cta_pianta.jpg" alt="Pianta listing"></div>
+  </div>
+  <h2>Ship Your First Listing Today</h2>
+  <p class="fcta-sub">Need the pipeline tailored to your workflow? Book a call.</p>
+  <div class="fcta-btns">
+    <a class="fcta-btn primary" href="#">Try Free</a>
+    <a class="fcta-btn secondary" href="#">Book a call</a>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="faq-inner">
+    <h2>Your Questions<br>Answered</h2>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <div class="faq-q">Do I keep the rights to the content I generate?
+          <svg class="faq-chevron" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.5" d="M19.1533 10.665L9.90191 1.41403L0.706771 10.6092" stroke="white" stroke-width="2"/></svg>
+        </div>
+        <div class="faq-a">Yes. Everything you generate is yours to use, publish, and sell across any marketplace or channel — no restrictions, no attribution required.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I edit the output, or is it locked once generated?
+          <svg class="faq-chevron" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.5" d="M19.1533 10.665L9.90191 1.41403L0.706771 10.6092" stroke="white" stroke-width="2"/></svg>
+        </div>
+        <div class="faq-a">Fully editable. Tweak copy, swap images, adjust layouts, or regenerate any part until it matches your brand and requirements.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How accurate is the marketplace formatting?
+          <svg class="faq-chevron" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.5" d="M19.1533 10.665L9.90191 1.41403L0.706771 10.6092" stroke="white" stroke-width="2"/></svg>
+        </div>
+        <div class="faq-a">Listings are built to each marketplace's spec — image ratios, character limits, A+ modules, and category rules — so they're ready to upload without manual reformatting.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What do you need from me to start?
+          <svg class="faq-chevron" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.5" d="M19.1533 10.665L9.90191 1.41403L0.706771 10.6092" stroke="white" stroke-width="2"/></svg>
+        </div>
+        <div class="faq-a">Just a product photo and a few basics — name, key features, and target marketplace. The pipeline handles the rest, from copy to gallery to A+ content.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is my product and brand data kept private?
+          <svg class="faq-chevron" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.5" d="M19.1533 10.665L9.90191 1.41403L0.706771 10.6092" stroke="white" stroke-width="2"/></svg>
+        </div>
+        <div class="faq-a">Yes. Your uploads, brand kits, and generated assets stay tied to your account and aren't shared or used to train public models.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var items=document.querySelectorAll('#faqList .faq-item');
+  items.forEach(function(it){
+    it.querySelector('.faq-q').addEventListener('click', function(){
+      var wasOpen=it.classList.contains('open');
+      items.forEach(function(x){ x.classList.remove('open'); });
+      if(!wasOpen) it.classList.add('open');
+    });
+  });
+})();
+</script>
+
 <script>
 function fillAsk(t){
   var i=document.getElementById('askInput');
@@ -2145,16 +2636,22 @@ setInterval(function(){
 (function(){
   var bar=document.getElementById('askbar');
   var light=document.querySelectorAll('.light-section'); // white-background sections
-  if(!bar||!light.length) return;
+  var yellow=document.querySelector('.fcta'); // yellow CTA section
+  if(!bar) return;
   function update(){
     var barRect=bar.getBoundingClientRect();
     var barY=barRect.top + barRect.height/2;
-    var onLight=false;
+    var onLight=false, onYellow=false;
     light.forEach(function(sec){
       var r=sec.getBoundingClientRect();
       if(r.top<=barY && r.bottom>=barY) onLight=true;
     });
-    bar.classList.toggle('on-light', onLight);
+    if(yellow){
+      var yr=yellow.getBoundingClientRect();
+      if(yr.top<=barY && yr.bottom>=barY) onYellow=true;
+    }
+    bar.classList.toggle('on-light', onLight && !onYellow);
+    bar.classList.toggle('on-yellow', onYellow);
   }
   window.addEventListener('scroll', update, {passive:true});
   window.addEventListener('resize', update);
