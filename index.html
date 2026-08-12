@@ -247,6 +247,16 @@
   }
 
   /* ---- ask bar ---- */
+  .ask-scrim {
+    position:fixed; left:0; right:0; bottom:0;
+    height:420px;
+    z-index:9998;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .3s ease;
+    background:linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.6) 100%);
+  }
+  .ask-scrim.show { opacity:1; }
   .askbar-wrap {
     display:flex; justify-content:center;
     position:fixed; left:0; right:0; bottom:0;
@@ -314,6 +324,16 @@
     font-family:inherit; font-size:16px;
   }
   .askbar input::placeholder { color:rgba(255,255,255,0.45); }
+  /* dark theme of the bar when it floats over a light section */
+  .askbar.on-light {
+    border-color:rgba(0,0,0,0.28);
+    background:rgba(255,255,255,0.6);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .askbar.on-light .plus { color:rgba(0,0,0,0.55); }
+  .askbar.on-light input { color:rgba(0,0,0,0.85); }
+  .askbar.on-light input::placeholder { color:rgba(0,0,0,0.5); }
+  .askbar.on-light.focused { border-color:#4aa8ff; }
   .askbar .send {
     border:none; background:none; padding:0; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
@@ -443,7 +463,7 @@
   /* ===== Migrate section (third floor) ===== */
   .migrate {
     position:relative;
-    background:#243242;
+    background:#232F3E;
     padding:72px 24px 100px;
     text-align:center;
     overflow:hidden;
@@ -547,6 +567,149 @@
     .migrate-logos { gap:24px; flex-wrap:wrap; }
     .mlogo-pair img { width:38px; height:38px; }
     .mlogo-pair.active img { width:46px; height:46px; }
+  }
+  /* ===== Create Listing section (fourth floor) ===== */
+  .create {
+    position:relative;
+    background:#ffffff;
+    padding:90px 40px 110px;
+    overflow:hidden;
+  }
+  .create-inner {
+    max-width:1240px; margin:0 auto;
+    display:grid; grid-template-columns:1fr 1fr; gap:40px;
+    align-items:center;
+  }
+  .create-left { position:relative; }
+  .create h2 {
+    font-family:'Unbounded',sans-serif;
+    font-weight:400;
+    font-size:clamp(30px, 3.4vw, 44px);
+    line-height:1.12; letter-spacing:-0.5px;
+    margin:0 0 26px;
+  }
+  .create h2 .l1 { color:#111; display:block; }
+  .create h2 .l2 { color:#c7ccd2; display:block; }
+  .create-desc {
+    font-family:'Graphik RBC',sans-serif;
+    color:#555;
+    font-size:clamp(15px,1.4vw,18px); line-height:1.6;
+    max-width:400px; margin:0 0 40px;
+  }
+  /* photo stack */
+  .photo-stack {
+    position:relative; height:340px; margin-top:10px; margin-left:auto;
+    width:320px; margin-right:0;
+  }
+  .photo-stack .snap {
+    position:absolute;
+    width:112px; border-radius:8px; overflow:hidden;
+    background:#fff; padding:4px; /* thin polaroid border */
+    box-shadow:0 6px 16px rgba(0,0,0,0.12);
+  }
+  .photo-stack .snap img { width:100%; height:auto; display:block; border-radius:5px; }
+  .photo-stack .snap.s1 { left:30px;  top:30px;  transform:rotate(-9deg); }
+  .photo-stack .snap.s2 { left:130px; top:0;     transform:rotate(6deg); z-index:2; }
+  .photo-stack .snap.s3 { left:100px; top:140px; transform:rotate(-3deg); z-index:3; }
+  /* hand-drawn arrow (static) */
+  .create-arrow {
+    position:absolute; z-index:4;
+    right:-10px; bottom:40px;
+    width:150px; pointer-events:none;
+  }
+  .create-arrow img { width:100%; height:auto; display:block; }
+  /* right card */
+  .create-right { display:flex; justify-content:center; }
+  .create-card {
+    width:100%; max-width:560px;
+    border-radius:43px; overflow:hidden;
+  }
+  .create-card img { width:100%; height:auto; display:block; }
+  @media (max-width:900px) {
+    .create-inner { grid-template-columns:1fr; gap:48px; }
+    .create-arrow { display:none; }
+    .photo-stack { height:360px; }
+  }
+  /* ===== A+ Content section (fifth floor) ===== */
+  .aplus {
+    position:relative;
+    min-height:800px;
+    background:#232F3E;
+    overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  /* isometric marquee stage (background) */
+  .aplus-stage {
+    position:absolute; inset:0; overflow:hidden;
+    perspective:none;
+    --dur:120s;
+    --tilt-x:-36deg; --turn-y:24deg; --skew-x:-14deg; --skew-v:20deg; --squash:0.9;
+  }
+  .aplus-rail {
+    position:absolute; inset:-90%;
+    display:flex; justify-content:center; gap:0;
+    transform:
+      rotateX(var(--tilt-x)) rotateY(var(--turn-y))
+      skewX(var(--skew-x)) skewY(var(--skew-v))
+      scale(1.6, var(--squash));
+    transform-style:preserve-3d;
+    opacity:0.5;
+  }
+  .aplus-col { width:34vw; overflow:hidden; }
+  .aplus-track {
+    display:flex; flex-direction:column;
+    will-change:transform;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
+    animation-duration:var(--dur);
+  }
+  .aplus-track img { display:block; width:100%; height:auto; }
+  .aplus-col.up   .aplus-track { animation-name:aplusUp; }
+  .aplus-col.down .aplus-track { animation-name:aplusDown; }
+  .aplus-col.c1 .aplus-track { animation-duration:calc(var(--dur) * 1.0); }
+  .aplus-col.c2 .aplus-track { animation-duration:calc(var(--dur) * 1.35); }
+  .aplus-col.c3 .aplus-track { animation-duration:calc(var(--dur) * 0.85); }
+  @keyframes aplusUp   { from{transform:translateY(0);}   to{transform:translateY(-50%);} }
+  @keyframes aplusDown { from{transform:translateY(-50%);} to{transform:translateY(0);} }
+  /* edges dissolve into the section colour */
+  /* darkening veil so the headline reads over the marquee */
+  .aplus-veil {
+    position:absolute; inset:0; z-index:3; pointer-events:none;
+    background:rgba(35,47,62,0.45);
+  }
+  /* white rounded frame (squircle) overlaid on top — same as second floor, white */
+  .aplus-frame {
+    position:absolute; inset:38px; z-index:4; pointer-events:none;
+    border-radius:60px;
+    corner-shape:squircle;
+    box-shadow:0 0 0 2000px #ffffff;
+  }
+  /* foreground content */
+  .aplus-content {
+    position:relative; z-index:5;
+    text-align:center; padding:0 24px;
+    max-width:1300px;
+  }
+  .aplus-content h2 {
+    font-family:'Unbounded',sans-serif;
+    font-weight:500;
+    color:#fff;
+    font-size:clamp(52px, 9vw, 150px);
+    line-height:0.95; letter-spacing:-3px;
+    margin:0;
+    white-space:nowrap;
+  }
+  .aplus-content .aplus-sub {
+    font-family:'Graphik RBC',sans-serif;
+    color:rgba(255,255,255,0.9);
+    font-size:clamp(15px, 1.5vw, 19px);
+    line-height:1.5; max-width:640px;
+    margin:0 auto 22px;
+  }
+  @media (max-width:900px) {
+    .aplus { min-height:820px; }
+    .aplus-col { width:40vw; }
+    .aplus-content h2 { font-size:clamp(40px, 13vw, 90px); letter-spacing:-1px; }
   }
 </style>
 </head>
@@ -799,6 +962,7 @@
 
 </div>
 
+<div class="ask-scrim" id="askScrim"></div>
 <div class="askbar-wrap">
   <div class="askbar-stack">
     <div class="ask-chips" id="askChips"></div>
@@ -846,6 +1010,63 @@
   </div>
 </section>
 
+<section class="create light-section" id="createSection">
+  <div class="create-inner">
+    <div class="create-left">
+      <h2>
+        <span class="l1">Create Listing</span>
+        <span class="l2">A Few Photos In.</span>
+        <span class="l2">Full Listing Out.</span>
+      </h2>
+      <p class="create-desc">Upload a handful of product shots and a rough description → get a complete, ready-to-publish listing: content gallery, infographics, bullets, and A+.</p>
+
+      <div class="photo-stack" id="photoStack">
+        <div class="snap s1"><img src="assets/photo1.jpg" alt="" loading="lazy"></div>
+        <div class="snap s2"><img src="assets/photo2.jpg" alt="" loading="lazy"></div>
+        <div class="snap s3"><img src="assets/photo3.jpg" alt="" loading="lazy"></div>
+      </div>
+      <div class="create-arrow"><img src="assets/arrow.png" alt=""></div>
+    </div>
+
+    <div class="create-right">
+      <div class="create-card reveal-card">
+        <img src="assets/sofa.png" alt="Generated sofa listing" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="aplus">
+  <div class="aplus-stage">
+    <div class="aplus-rail">
+      <div class="aplus-col c1 up">
+        <div class="aplus-track">
+          <img src="assets/aplus1.jpg" alt="">
+          <img src="assets/aplus1.jpg" alt="" aria-hidden="true">
+        </div>
+      </div>
+      <div class="aplus-col c2 down">
+        <div class="aplus-track">
+          <img src="assets/aplus2.jpg" alt="">
+          <img src="assets/aplus2.jpg" alt="" aria-hidden="true">
+        </div>
+      </div>
+      <div class="aplus-col c3 up">
+        <div class="aplus-track">
+          <img src="assets/aplus3.jpg" alt="">
+          <img src="assets/aplus3.jpg" alt="" aria-hidden="true">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="aplus-veil"></div>
+  <div class="aplus-frame"></div>
+  <div class="aplus-content">
+    <p class="aplus-sub">Full A+ modules built from scratch: comparison charts, lifestyle blocks, brand story. The premium content agencies charge thousands for.</p>
+    <h2>A+ Content</h2>
+  </div>
+</section>
+
 <script>
 function fillAsk(t){
   var i=document.getElementById('askInput');
@@ -876,10 +1097,12 @@ function showChips(){
   });
   box.classList.add('show');
   document.getElementById('askbar').classList.add('focused');
+  var sc=document.getElementById('askScrim'); if(sc) sc.classList.add('show');
 }
 function hideChips(){
   document.getElementById('askChips').classList.remove('show');
   document.getElementById('askbar').classList.remove('focused');
+  var sc=document.getElementById('askScrim'); if(sc) sc.classList.remove('show');
 }
 (function(){
  try{
@@ -1164,6 +1387,26 @@ setInterval(function(){
   var timer=setInterval(step,7000);
   logosEl.addEventListener('mouseenter',function(){ clearInterval(timer); });
   logosEl.addEventListener('mouseleave',function(){ timer=setInterval(step,7000); });
+})();
+
+/* ===== Ask-bar theme: dark bar over light sections ===== */
+(function(){
+  var bar=document.getElementById('askbar');
+  var light=document.querySelectorAll('.light-section'); // white-background sections
+  if(!bar||!light.length) return;
+  function update(){
+    var barRect=bar.getBoundingClientRect();
+    var barY=barRect.top + barRect.height/2;
+    var onLight=false;
+    light.forEach(function(sec){
+      var r=sec.getBoundingClientRect();
+      if(r.top<=barY && r.bottom>=barY) onLight=true;
+    });
+    bar.classList.toggle('on-light', onLight);
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  update();
 })();
 </script>
 </body>
