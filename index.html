@@ -332,7 +332,10 @@
     padding:8px 8px 8px 17px;
     box-shadow:0 0 0 4px rgba(74,168,255,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
   }
-  .askbar .plus { color:rgba(255,255,255,0.6); font-size:20px; }
+  .askbar .plus { color:rgba(255,255,255,0.6); font-size:20px; cursor:pointer; user-select:none; transition:color .15s ease; line-height:1; }
+  .askbar .plus:hover { color:rgba(255,255,255,0.95); }
+  .askbar.on-light .plus:hover { color:rgba(0,0,0,0.85); }
+  .askbar.on-yellow .plus:hover { color:rgba(0,0,0,0.8); }
   .askbar input {
     flex:1; background:none; border:none; outline:none;
     color:rgba(255,255,255,0.85);
@@ -666,7 +669,7 @@
   .aplus-stage {
     position:absolute; inset:0; overflow:hidden;
     perspective:none;
-    --dur:120s;
+    --dur:35s;
     --tilt-x:-36deg; --turn-y:24deg; --skew-x:-14deg; --skew-v:20deg; --squash:0.9;
   }
   .aplus-rail {
@@ -994,7 +997,7 @@
     inset: 0;
     z-index: 0;
     background-image:
-      linear-gradient(rgba(19, 25, 31, 0.76), rgba(19, 25, 31, 0.76)),
+      linear-gradient(rgba(19, 25, 31, 0), rgba(19, 25, 31, 0)),
       url("assets/tryon_bg.png");
     background-repeat: no-repeat;
     background-position: center;
@@ -1004,7 +1007,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(19, 24, 30, 0.08);
+    background: transparent;
     pointer-events: none;
   }
   /* white rounded frame (squircle) — same as A+ section */
@@ -1881,7 +1884,9 @@
   <div class="askbar-stack">
     <div class="ask-chips" id="askChips"></div>
     <div class="askbar" id="askbar">
-      <span class="plus">+</span>
+      <label class="plus" for="askFile" role="button" aria-label="Attach image or file" tabindex="0">+</label>
+      <input type="file" id="askFile" accept="image/*,.pdf,.doc,.docx,.txt,.zip" multiple hidden
+             onchange="if(this.files&&this.files.length){var n=this.files.length;var inp=document.getElementById('askInput');inp.placeholder=(n===1?this.files[0].name:n+' files attached');document.querySelector('.askbar .send').classList.add('active');}">
       <input type="text" id="askInput" placeholder="Ask me anything."
              oninput="document.querySelector('.askbar .send').classList.toggle('active', this.value.trim().length>0)">
       <button class="send"><svg style="width:30px;height:30px;display:block" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1892,6 +1897,18 @@
     </div>
   </div>
 </div>
+
+<script>
+(function(){
+  var plus=document.querySelector('.askbar .plus');
+  var file=document.getElementById('askFile');
+  if(plus&&file){
+    plus.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); file.click(); }
+    });
+  }
+})();
+</script>
 
 <section class="cases">
   <div class="cases-collage"></div>
