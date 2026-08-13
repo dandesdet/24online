@@ -1905,7 +1905,8 @@
   <div class="askbar-stack">
     <div class="ask-chips" id="askChips"></div>
     <div class="askbar" id="askbar">
-      <label class="plus" for="askFile" role="button" aria-label="Attach image or file" tabindex="0">+</label>
+      <label class="plus" for="askFile" role="button" aria-label="Attach image or file" tabindex="0"
+             onmousedown="event.stopPropagation(); window.__askAttaching=true;">+</label>
       <input type="file" id="askFile" accept="image/*,.pdf,.doc,.docx,.txt,.zip" multiple hidden
              onchange="addAskAttachments(this.files); this.value='';">
       <span class="ask-thumbs" id="askThumbs"></span>
@@ -1967,8 +1968,7 @@ function addAskAttachments(fileList){
     thumbs.appendChild(thumb);
   });
   updateAskSend();
-  // keep caret ready for typing — the text field stays empty
-  if(input) input.focus();
+  // do not auto-focus: keep the bar collapsed; caret appears when the user clicks the field
 }
 function updateAskSend(){
   var send=document.querySelector('.askbar .send');
@@ -2475,9 +2475,15 @@ function hideChips(){
   // Any click/tap on the input (even when already focused) re-rolls & shows chips
   bar.addEventListener('mousedown',function(e){
     if(e.target.closest('.send')) return;
+    if(e.target.closest('.plus')) return;
+    if(e.target.closest('.ask-thumb')) return;
     showChips();
   });
-  inp.addEventListener('focus',showChips);
+  inp.addEventListener('focus',function(){
+    // don't pop chips if focus came from clicking the + (attach) control
+    if(window.__askAttaching){ window.__askAttaching=false; return; }
+    showChips();
+  });
   // ESC collapses the bar and removes the caret
   inp.addEventListener('keydown',function(e){
     if(e.key==='Escape'){
