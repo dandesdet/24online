@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>24 ONLINE</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+  @font-face{font-family:'Bricolage Grotesque';src:url('fonts/BricolageGrotesque.ttf') format('truetype');font-weight:200 800;font-style:normal;font-display:swap;}
 @font-face{font-family:'Graphik RBC';src:url('fonts/Graphik_RBC_LC-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap;}
 @font-face{font-family:'Graphik RBC';src:url('fonts/Graphik_RBC_LC-Medium.otf') format('opentype');font-weight:500;font-style:normal;font-display:swap;}
 @font-face{font-family:'Graphik RBC';src:url('fonts/Graphik_RBC_LC-Semibold.otf') format('opentype');font-weight:600;font-style:normal;font-display:swap;}
@@ -166,7 +166,6 @@
     text-align:center;
     width:100%;
     padding:clamp(12px, 3vh, 40px) 0;
-    zoom:0.9;
   }
   .trusted-label {
     font-size:15px; font-weight:400; color:rgba(255,255,255,0.5);
@@ -197,10 +196,10 @@
   }
 
   h1 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     margin-top:clamp(18px, 2.6vh, 34px);
     font-weight:600;
-    font-size:clamp(32px, 3.9vw, 56px);
+    font-size:clamp(38px, 4.7vw, 67px);
     line-height:1.04;
     letter-spacing:-1px;
   }
@@ -326,6 +325,33 @@
     box-shadow:inset 0 1px 0 rgba(255,255,255,0.2);
     transition:width .25s ease, border-color .2s ease, border-width .2s ease, padding .2s ease, box-shadow .2s ease;
   }
+  .ask-thumbs { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+  .ask-thumbs:empty { display:none; }
+  /* widen the bar a bit when attachments are present so text isn't squeezed */
+  .askbar:has(.ask-thumbs .ask-thumb) { width:420px; }
+  .askbar.focused:has(.ask-thumbs .ask-thumb) { width:480px; }
+  .ask-thumb {
+    position:relative; flex-shrink:0;
+    width:34px; height:34px; border-radius:9px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.25);
+    background:rgba(255,255,255,0.08);
+  }
+  .ask-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .ask-thumb.file { display:flex; align-items:center; justify-content:center;
+    font-size:9px; font-weight:600; color:rgba(255,255,255,0.8); text-align:center; padding:2px; }
+  .ask-thumb .rm {
+    position:absolute; top:-4px; right:-4px;
+    width:16px; height:16px; border-radius:50%;
+    border:none; cursor:pointer;
+    background:#111820; color:#fff;
+    font-size:11px; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 1px 3px rgba(0,0,0,0.4);
+  }
+  .ask-thumb .rm:hover { background:#000; }
+  .askbar.on-light .ask-thumb { border-color:rgba(0,0,0,0.2); }
+  .askbar.on-light .ask-thumb.file { color:rgba(0,0,0,0.7); }
   .askbar.focused {
     width:420px;
     border-width:2px;
@@ -458,7 +484,7 @@
     pointer-events:none;
   }
   .cases-text h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600;
     color:#111;
     font-size:40px;
@@ -514,7 +540,7 @@
     width:60px; height:60px; border-radius:14px; display:block;
   }
   .migrate h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600;
     font-size:clamp(30px, 4vw, 46px);
     line-height:1.12;
@@ -610,7 +636,7 @@
   }
   .create-left { position:relative; }
   .create h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600;
     font-size:clamp(30px, 3.4vw, 44px);
     line-height:1.12; letter-spacing:-0.5px;
@@ -719,7 +745,7 @@
     max-width:1300px;
   }
   .aplus-content h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:700;
     color:#fff;
     font-size:clamp(52px, 9vw, 150px);
@@ -748,7 +774,7 @@
     text-align:center;
   }
   .brandctl h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600;
     font-size:clamp(28px, 3.2vw, 42px);
     line-height:1.14; letter-spacing:-0.5px;
@@ -807,7 +833,7 @@
     z-index:2;
   }
   .banners-head h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600;
     font-size:clamp(24px, 2.6vw, 38px);
     line-height:1.14; letter-spacing:-0.5px;
@@ -874,7 +900,7 @@
     text-align:center;
   }
   .bulk h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600;
     font-size:clamp(26px, 3.2vw, 42px);
     line-height:1.16; letter-spacing:-0.5px;
@@ -1045,7 +1071,7 @@
     width: 100%;
     max-width: 720px;
     margin: 0;
-    font-family: 'Manrope', Helvetica, Arial, sans-serif;
+    font-family: 'Bricolage Grotesque', Helvetica, Arial, sans-serif;
     font-size: clamp(28px, 3vw, 42px);
     font-weight: 600;
     line-height: 1.12;
@@ -1119,7 +1145,7 @@
     text-align:center;
   }
   .whygpt h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600;
     color:#111;
     font-size:clamp(28px, 4vw, 52px);
@@ -1182,7 +1208,7 @@
   }
   .founders-avatars .av:nth-child(2) { margin-left:-26px; }
   .founders h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:700;
     color:#0b1016;
     font-size:clamp(30px, 4.2vw, 56px);
@@ -1250,7 +1276,7 @@
   .fcta-card.c-mid   { transform:translateY(-10px) scale(1.06); z-index:3; margin:0 -18px; }
   .fcta-card.c-right { transform:rotate(9deg) translateY(24px); z-index:1; }
   .fcta h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:700;
     color:#111;
     font-size:clamp(34px, 5vw, 66px);
@@ -1302,7 +1328,7 @@
     align-items:start;
   }
   .faq h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600;
     color:#fff;
     font-size:clamp(28px, 3vw, 40px);
@@ -1360,7 +1386,7 @@
     text-align:center;
   }
   .watermark p {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:700;
     color:#2b3a4a;
     font-size:clamp(30px, 6.2vw, 92px);
@@ -1444,7 +1470,7 @@
     overflow:hidden;
   }
   .models h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600;
     color:#fff;
     font-size:clamp(26px, 3.2vw, 42px);
@@ -1489,7 +1515,7 @@
     overflow:hidden;
   }
   .pricing h2 {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600;
     color:#fff;
     font-size:clamp(28px, 3.6vw, 50px);
@@ -1539,7 +1565,7 @@
     font-weight:600; font-size:20px; color:#fff;
   }
   .pr-cmp-card.right .big {
-    font-family:'Manrope',sans-serif;
+    font-family:'Bricolage Grotesque',sans-serif;
     font-weight:600; letter-spacing:-1px;
     font-size:clamp(48px,6vw,76px);
     color:#fff; line-height:1;
@@ -1881,7 +1907,8 @@
     <div class="askbar" id="askbar">
       <label class="plus" for="askFile" role="button" aria-label="Attach image or file" tabindex="0">+</label>
       <input type="file" id="askFile" accept="image/*,.pdf,.doc,.docx,.txt,.zip" multiple hidden
-             onchange="if(this.files&&this.files.length){var n=this.files.length;var inp=document.getElementById('askInput');inp.placeholder=(n===1?this.files[0].name:n+' files attached');document.querySelector('.askbar .send').classList.add('active');}">
+             onchange="addAskAttachments(this.files); this.value='';">
+      <span class="ask-thumbs" id="askThumbs"></span>
       <input type="text" id="askInput" placeholder="Ask me anything."
              oninput="document.querySelector('.askbar .send').classList.toggle('active', this.value.trim().length>0)">
       <button class="send"><svg style="width:30px;height:30px;display:block" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1903,6 +1930,53 @@
     });
   }
 })();
+
+// keep selected files so removing one thumb removes the right file
+window.__askFiles = window.__askFiles || [];
+function addAskAttachments(fileList){
+  var thumbs=document.getElementById('askThumbs');
+  var input=document.getElementById('askInput');
+  var send=document.querySelector('.askbar .send');
+  if(!thumbs||!fileList) return;
+  Array.prototype.forEach.call(fileList, function(f){
+    window.__askFiles.push(f);
+    var thumb=document.createElement('span');
+    thumb.className='ask-thumb';
+    if(f.type && f.type.indexOf('image/')===0){
+      var img=document.createElement('img');
+      img.src=URL.createObjectURL(f);
+      img.alt=f.name;
+      img.onload=function(){ URL.revokeObjectURL(img.src); };
+      thumb.appendChild(img);
+    } else {
+      thumb.classList.add('file');
+      var ext=(f.name.split('.').pop()||'file').toUpperCase().slice(0,4);
+      thumb.textContent=ext;
+      thumb.title=f.name;
+    }
+    var rm=document.createElement('button');
+    rm.className='rm'; rm.type='button'; rm.setAttribute('aria-label','Remove'); rm.textContent='×';
+    rm.addEventListener('click',function(ev){
+      ev.preventDefault(); ev.stopPropagation();
+      var idx=window.__askFiles.indexOf(f);
+      if(idx>-1) window.__askFiles.splice(idx,1);
+      thumb.remove();
+      updateAskSend();
+    });
+    thumb.appendChild(rm);
+    thumbs.appendChild(thumb);
+  });
+  updateAskSend();
+  // keep caret ready for typing — the text field stays empty
+  if(input) input.focus();
+}
+function updateAskSend(){
+  var send=document.querySelector('.askbar .send');
+  var input=document.getElementById('askInput');
+  if(!send) return;
+  var has=(window.__askFiles && window.__askFiles.length>0) || (input && input.value.trim().length>0);
+  send.classList.toggle('active', has);
+}
 </script>
 
 <section class="cases">
@@ -2533,6 +2607,15 @@ setInterval(function(){
   function buildMarquee(){
     buildOneMarquee('mqTrack');
     buildOneMarquee('mqTrack2');
+    // restart the CSS animation so it doesn't freeze/desync after a rebuild (e.g. on reload)
+    ['mqTrack','mqTrack2'].forEach(function(id){
+      var t=document.getElementById(id);
+      if(!t) return;
+      t.style.animation='none';
+      // force reflow, then re-apply the animation from a clean state
+      void t.offsetWidth;
+      t.style.animation='';
+    });
   }
   function init(){ buildMarquee(); }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
