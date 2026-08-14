@@ -1227,7 +1227,7 @@
     background:#fafafa;
     border:1px solid #c6c6c6;
     box-shadow:none;
-    will-change:transform, opacity;
+    will-change:transform, opacity, filter;
   }
   .wg-card p {
     font-family:'Graphik RBC',sans-serif;
@@ -2946,20 +2946,22 @@ var phrases=["Create Listings That Convert","Enhance Listing To\u00A0Rank Higher
     cards.forEach(function(card, i){
       var d=i-prog; // >0 = still in deck (below top), <0..0 = flying/flown
       if(d<=-1){
-        // fully flown away, transparent, above
-        card.style.transform='translateY(-250px) scale(0.96)';
+        // fully flown past the viewer — huge, blurred, gone
+        card.style.transform='scale(1.9)';
         card.style.opacity='0';
-        card.style.zIndex=String(i);
+        card.style.filter='blur(24px)';
+        card.style.zIndex=String(300-i);
         return;
       }
       if(d<0){
-        // in flight: from resting (d=0) to gone (d=-1) — moves UP to 0 opacity over ~250px
+        // in flight toward the viewer: grows past the screen, blurs, fades out
         var f=-d; // 0..1
-        var ty=-250*f;
-        var sc=1-0.04*f;
-        card.style.transform='translateY('+ty+'px) scale('+sc+')';
+        var sc=1+0.9*f;          // 1 → 1.9, rushing toward the camera
+        var blur=24*f;           // 0 → 24px
+        card.style.transform='scale('+sc.toFixed(3)+')';
         card.style.opacity=String(1-f);
-        card.style.zIndex=String(200-i);
+        card.style.filter='blur('+blur.toFixed(1)+'px)';
+        card.style.zIndex=String(300-i); // stays on top as it flies at you
         return;
       }
       // resting deck: fan out behind, alternating rotation for a messy stack
@@ -2970,6 +2972,7 @@ var phrases=["Create Listings That Convert","Enhance Listing To\u00A0Rank Higher
       var rot=(off===0)?0:(dir*ROT*off);
       card.style.transform='translateY('+ty+'px) translateX('+(dir*off*6)+'px) scale('+sc+') rotate('+rot+'deg)';
       card.style.opacity=String(Math.max(0, 1-off*0.22));
+      card.style.filter='none';
       card.style.zIndex=String(100-Math.round(d));
     });
   }
