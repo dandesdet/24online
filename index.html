@@ -90,6 +90,30 @@
     cursor:pointer;
   }
   .nav-burger:hover { background:rgba(255,255,255,0.12); }
+  /* mobile dropdown menu */
+  .mobile-menu {
+    display:none;
+    position:absolute; top:72px; left:16px; right:16px; z-index:8000;
+    flex-direction:column;
+    background:rgba(30,42,56,0.96);
+    backdrop-filter:blur(20px) saturate(160%);
+    -webkit-backdrop-filter:blur(20px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.10);
+    border-radius:18px;
+    padding:12px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.4);
+  }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a {
+    color:rgba(255,255,255,0.9); text-decoration:none;
+    font-size:17px; padding:14px 12px; border-radius:10px;
+  }
+  .mobile-menu a:hover { background:rgba(255,255,255,0.06); color:#fff; }
+  .mobile-menu-cta {
+    display:flex; gap:10px; margin-top:8px; padding-top:12px;
+    border-top:1px solid rgba(255,255,255,0.10);
+  }
+  .mobile-menu-cta .btn-ghost, .mobile-menu-cta .btn-white { flex:1; font-size:15px; padding:12px; }
   .btn-ghost {
     background:rgba(255,255,255,0.06); color:#fff;
     border:1px solid rgba(255,255,255,0.14);
@@ -416,7 +440,7 @@
     display:inline-block;
     background-image:repeating-linear-gradient(#FCCA2E,#FCCA2E);
     background-clip:text; -webkit-background-clip:text;
-    transition:opacity .5s ease;
+    transition:opacity .25s ease;
   }
   .blind-text.fading { opacity:0; }
 
@@ -438,16 +462,16 @@
     /* hamburger shown on mobile */
     .nav-burger { display:inline-flex; }
     /* brand logos in a single row */
-    .brand-circles { flex-wrap:nowrap; gap:14px; overflow:hidden; margin-bottom:clamp(20px,4vh,44px); }
-    .brand-circles svg { height:22px; }
+    .brand-circles { flex-wrap:nowrap; gap:12px; overflow:hidden; margin-bottom:clamp(20px,4vh,44px); }
+    .brand-circles svg { height:26px; }
   }
   @media (max-width:560px) {
     h1 { font-size:30px; letter-spacing:-0.5px; }
     .badge { font-size:11px; padding:7px 10px; }
     .badges { gap:6px; }
     .btn-ghost, .btn-white { font-size:12px; padding:7px 12px; }
-    .brand-circles { gap:10px; }
-    .brand-circles svg { height:18px; }
+    .brand-circles { gap:8px; }
+    .brand-circles svg { height:21px; }
   }
 
   /* ===== Cases section ===== */
@@ -1728,7 +1752,7 @@
 
   <header>
     <div class="nav-left">
-      <svg style="width:140px;height:auto;display:block" viewBox="0 0 154 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg style="width:98px;height:auto;display:block" viewBox="0 0 154 38" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#logo24_clip0_91_204)">
 <path d="M50.3434 2.18908e-06H3.24596C1.35733 0.0020071 -0.00300239 1.46559 4.97655e-06 3.40836V33.052C0.00200989 34.9948 1.40044 36.3711 3.28706 36.3691H50.3865C52.2731 36.3671 53.6505 34.9036 53.6485 32.9608L53.6134 3.31713C53.6114 1.37337 52.23 -0.00200273 50.3434 2.18908e-06ZM25.4805 23.6039L25.4845 27.1415L7.43824 27.1636L7.43122 20.9614C10.3083 20.2095 14.4444 19.1339 16.3781 18.5585C20.2717 17.3826 21.2381 16.4102 21.2361 14.4424C21.2331 12.1758 19.4176 11.0822 16.4664 11.0852C13.6364 11.0892 11.3388 12.0636 11.4641 15.924L7.08637 15.93C6.83676 11.3468 9.20457 7.5074 16.3401 7.49838C23.1618 7.48836 25.681 10.4506 25.685 14.1617C25.688 17.0267 24.7226 19.4447 20.2496 20.8702C17.1059 21.8696 13.9863 22.4961 10.8907 23.0736V23.5467L25.4805 23.6039ZM47.3741 25.0965L44.061 25.1005L44.063 27.6909L40.2657 27.6959L40.2627 25.1055L28.0227 25.1206L28.0147 19.0918C33.6234 16.0714 37.3185 10.6361 38.1134 7.87029L43.0966 7.86428C40.0552 13.7467 34.6189 19.3584 31.3077 21.0807V21.7784L40.2587 21.7674L40.2527 16.8603L44.051 16.8553L44.056 21.7623L47.3711 21.7583L47.3741 25.0965Z" fill="white"/>
 <path d="M136.901 0.677246H73.3224C64.9259 0.677246 58.1191 7.48398 58.1191 15.8805V20.4878C58.1191 28.8843 64.9259 35.6911 73.3224 35.6911H136.901C145.298 35.6911 152.105 28.8843 152.105 20.4878V15.8805C152.105 7.48398 145.298 0.677246 136.901 0.677246Z" stroke="white" stroke-width="0.921258"/>
@@ -1750,11 +1774,22 @@
     <div class="nav-right">
       <button class="btn-ghost">Try free</button>
       <button class="btn-white">Sign in</button>
-      <button class="nav-burger" aria-label="Menu">
+      <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false" onclick="toggleMobileMenu()">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
     </div>
   </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="https://24.online/about">About</a>
+    <a href="https://24.online/billing">Pricing</a>
+    <a href="https://24.online/prompt-library">Prompt Library</a>
+    <a href="https://24.online/affiliate">Affiliate</a>
+    <div class="mobile-menu-cta">
+      <button class="btn-ghost">Try free</button>
+      <button class="btn-white">Sign in</button>
+    </div>
+  </div>
 
   <div class="float-card" id="floatCard">
     <button class="x" onclick="fcClose()">&times;</button>
@@ -2313,8 +2348,8 @@ function updateAskSend(){
     <img class="av" src="assets/founder1.png" alt="Yury Shishkin">
     <img class="av" src="assets/founder2.png" alt="Vitaly Tsoy">
   </div>
-  <h2>From Founders With 18 Years In&nbsp;Ecommerce</h2>
-  <p class="founders-sub">We've spent 18 years in e-commerce across Europe, Asia, and the UAE — working with everyone from local sellers to Fortune Global 500 brands. We built 24.online because we've lived the problem: content makes or breaks a listing. We know exactly which features and services actually move the needle.</p>
+  <h2>From Founders With 15 Years In&nbsp;Ecommerce</h2>
+  <p class="founders-sub">We've spent 15 years in e-commerce across Europe, Asia, and the UAE — working with everyone from local sellers to Fortune Global 500 brands. We built 24.online because we've lived the problem: content makes or breaks a listing. We know exactly which features and services actually move the needle.</p>
   <div class="founders-links">
     <a class="founders-link" href="https://www.linkedin.com/company/24-online/" target="_blank" rel="noopener">
       <svg class="li-ico" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.3838 0C19.8684 0 21.8828 2.01439 21.8828 4.49902V17.3838C21.8828 19.8684 19.8684 21.8828 17.3838 21.8828H4.49902C2.01439 21.8828 0 19.8684 0 17.3838V4.49902C0 2.01439 2.01439 0 4.49902 0H17.3838ZM14.1279 8.53613C13.7945 8.53181 13.4619 8.57723 13.1416 8.66992C12.8452 8.75873 12.5957 8.88395 12.3926 9.04492C12.1893 9.2053 12.0267 9.3544 11.9062 9.49219C11.7921 9.62281 11.6807 9.7744 11.5713 9.94629V8.73535H8.73828L8.74707 9.14844C8.75083 9.42399 8.75293 10.2734 8.75293 11.6963C8.75293 13.1193 8.74762 14.9763 8.73633 17.2666H11.5713V12.5068C11.5639 12.2706 11.5956 12.0345 11.665 11.8086C11.781 11.5208 11.9688 11.2673 12.2109 11.0732C12.4555 10.8753 12.7589 10.7765 13.1201 10.7764C13.6133 10.7764 13.9761 10.947 14.208 11.2881C14.4414 11.6306 14.5586 12.1028 14.5586 12.7051V17.2676H17.3896L17.3906 12.377C17.3906 11.1203 17.0922 10.1657 16.4951 9.51367C15.8988 8.86238 15.1098 8.53613 14.1279 8.53613ZM4.3291 8.73633V17.2666H7.16992V8.73633H4.3291ZM5.7666 4.62891C5.29018 4.62899 4.90422 4.76837 4.6084 5.04688C4.31327 5.32546 4.16504 5.67692 4.16504 6.10156C4.16019 6.29686 4.19645 6.4911 4.27051 6.67188C4.34458 6.85265 4.45521 7.01659 4.5957 7.15234C4.88255 7.43307 5.26193 7.57324 5.73242 7.57324H5.74902C6.23085 7.57323 6.62013 7.43315 6.91602 7.15234C7.17497 6.90525 7.31798 6.60578 7.3457 6.25488L7.35156 6.10156C7.34403 5.67697 7.19716 5.32544 6.91113 5.04688C6.62502 4.76829 6.24321 4.62891 5.7666 4.62891Z" fill="#131313"/></svg>
@@ -2604,7 +2639,7 @@ var bi=0;
 setInterval(function(){
   var el=document.querySelector('#blinds .blind-text');
   el.classList.add('fading');
-  setTimeout(function(){ bi=(bi+1)%phrases.length; el.textContent=phrases[bi]; el.classList.remove('fading'); },500);
+  setTimeout(function(){ bi=(bi+1)%phrases.length; el.textContent=phrases[bi]; el.classList.remove('fading'); },250);
 },4160);
 
 
@@ -3015,6 +3050,25 @@ setInterval(function(){
       if(m && m.classList.contains('open')) closeCal();
     }
   }, true);
+</script>
+<script>
+function toggleMobileMenu(){
+  var m=document.getElementById('mobileMenu');
+  var b=document.getElementById('navBurger');
+  if(!m) return;
+  var open=m.classList.toggle('open');
+  if(b) b.setAttribute('aria-expanded', open?'true':'false');
+}
+// close on outside click or link click
+document.addEventListener('click',function(e){
+  var m=document.getElementById('mobileMenu');
+  var b=document.getElementById('navBurger');
+  if(!m||!m.classList.contains('open')) return;
+  if(e.target.closest('#mobileMenu a')){ m.classList.remove('open'); if(b) b.setAttribute('aria-expanded','false'); return; }
+  if(!e.target.closest('#mobileMenu') && !e.target.closest('#navBurger')){
+    m.classList.remove('open'); if(b) b.setAttribute('aria-expanded','false');
+  }
+});
 </script>
 </body>
 </html>
