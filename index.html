@@ -434,19 +434,20 @@
   .askbar .send.active:hover { opacity:0.85; }
 
 
-  /* fade rotation */
-  .blinds { display:inline-block; position:relative; }
+  /* crossfade rotation — new phrase fades in as old fades out, no empty gap */
+  .blinds { display:inline-grid; position:relative; }
   .blind-text {
+    grid-area:1 / 1;
     display:inline-block;
-    background-image:repeating-linear-gradient(#FCCA2E,#FCCA2E);
-    background-clip:text; -webkit-background-clip:text;
-    transition:opacity .25s ease;
+    color:#FCCA2E;
+    transition:opacity .6s ease;
   }
-  .blind-text.fading { opacity:0; }
+  .blind-text.out { opacity:0; }
 
   .badge .b-short { display:none; }
   @media (max-width:900px) {
-    h1 { font-size:46px; }
+    h1 { font-size:62px; }
+    .trusted-label { margin-top:14px; }
     .badge .b-full { display:none; }
     .badge .b-short { display:inline; }
     .badges { flex-wrap:nowrap; justify-content:center; gap:8px; }
@@ -455,7 +456,7 @@
     .nav-links { display:none; }
     .float-card { display:none; }
     .subtitle { font-size:16px; padding:0 20px; }
-    .cta { font-size:18px; padding:18px 32px; }
+    .cta { font-size:13px; padding:13px 22px; }
     /* smaller header buttons so their text fits */
     .nav-right { gap:8px; }
     .btn-ghost, .btn-white { font-size:13px; padding:8px 14px; border-radius:16px; }
@@ -466,7 +467,7 @@
     .brand-circles svg { height:26px; }
   }
   @media (max-width:560px) {
-    h1 { font-size:30px; letter-spacing:-0.5px; }
+    h1 { font-size:40px; letter-spacing:-0.5px; }
     .badge { font-size:11px; padding:7px 10px; }
     .badges { gap:6px; }
     .btn-ghost, .btn-white { font-size:12px; padding:7px 12px; }
@@ -1752,6 +1753,9 @@
 
   <header>
     <div class="nav-left">
+      <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false" onclick="toggleMobileMenu()">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
       <svg style="width:98px;height:auto;display:block" viewBox="0 0 154 38" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#logo24_clip0_91_204)">
 <path d="M50.3434 2.18908e-06H3.24596C1.35733 0.0020071 -0.00300239 1.46559 4.97655e-06 3.40836V33.052C0.00200989 34.9948 1.40044 36.3711 3.28706 36.3691H50.3865C52.2731 36.3671 53.6505 34.9036 53.6485 32.9608L53.6134 3.31713C53.6114 1.37337 52.23 -0.00200273 50.3434 2.18908e-06ZM25.4805 23.6039L25.4845 27.1415L7.43824 27.1636L7.43122 20.9614C10.3083 20.2095 14.4444 19.1339 16.3781 18.5585C20.2717 17.3826 21.2381 16.4102 21.2361 14.4424C21.2331 12.1758 19.4176 11.0822 16.4664 11.0852C13.6364 11.0892 11.3388 12.0636 11.4641 15.924L7.08637 15.93C6.83676 11.3468 9.20457 7.5074 16.3401 7.49838C23.1618 7.48836 25.681 10.4506 25.685 14.1617C25.688 17.0267 24.7226 19.4447 20.2496 20.8702C17.1059 21.8696 13.9863 22.4961 10.8907 23.0736V23.5467L25.4805 23.6039ZM47.3741 25.0965L44.061 25.1005L44.063 27.6909L40.2657 27.6959L40.2627 25.1055L28.0227 25.1206L28.0147 19.0918C33.6234 16.0714 37.3185 10.6361 38.1134 7.87029L43.0966 7.86428C40.0552 13.7467 34.6189 19.3584 31.3077 21.0807V21.7784L40.2587 21.7674L40.2527 16.8603L44.051 16.8553L44.056 21.7623L47.3711 21.7583L47.3741 25.0965Z" fill="white"/>
@@ -1774,9 +1778,6 @@
     <div class="nav-right">
       <button class="btn-ghost">Try free</button>
       <button class="btn-white">Sign in</button>
-      <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false" onclick="toggleMobileMenu()">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
     </div>
   </header>
 
@@ -1860,7 +1861,7 @@
 
     <div class="badges">
       <div class="badge"><span class="b-full">10M+ SKUs processed</span><span class="b-short">10M+ SKUs</span></div>
-      <div class="badge"><span class="b-full">15+ yrs in E-commerce</span><span class="b-short">15+ yrs</span></div>
+      <div class="badge"><span class="b-full">18+ yrs in E-commerce</span><span class="b-short">18+ yrs in e-com</span></div>
       <div class="badge"><span class="b-full">176 brands in portfolio</span><span class="b-short">176 brands</span></div>
     </div>
 
@@ -2635,12 +2636,29 @@ function fcClose(){
 })();
 
 var phrases=["Create Listings That Convert","Enhance Listing To\u00A0Rank Higher","Migrate Listing To\u00A0Outsell Rivals"];
-var bi=0;
-setInterval(function(){
-  var el=document.querySelector('#blinds .blind-text');
-  el.classList.add('fading');
-  setTimeout(function(){ bi=(bi+1)%phrases.length; el.textContent=phrases[bi]; el.classList.remove('fading'); },250);
-},4160);
+(function(){
+  var wrap=document.getElementById('blinds');
+  if(!wrap) return;
+  var bi=0;
+  // ensure two stacked layers for crossfade
+  var cur=wrap.querySelector('.blind-text');
+  cur.textContent=phrases[0];
+  var next=document.createElement('span');
+  next.className='blind-text out';
+  wrap.appendChild(next);
+  setInterval(function(){
+    var ni=(bi+1)%phrases.length;
+    next.textContent=phrases[ni];
+    // trigger crossfade: current out, next in
+    next.classList.remove('out');
+    cur.classList.add('out');
+    // after the fade, swap roles (no reflow gap because grid keeps them stacked)
+    setTimeout(function(){
+      var tmp=cur; cur=next; next=tmp;
+      bi=ni;
+    },620);
+  },4200);
+})();
 
 
 (function(){
