@@ -81,6 +81,15 @@
   }
   .nav-links a:hover { color:#fff; }
   .nav-right { display:flex; align-items:center; gap:10px; }
+  .nav-burger {
+    display:none;
+    align-items:center; justify-content:center;
+    width:40px; height:40px; border-radius:12px;
+    background:rgba(255,255,255,0.06); color:#fff;
+    border:1px solid rgba(255,255,255,0.14);
+    cursor:pointer;
+  }
+  .nav-burger:hover { background:rgba(255,255,255,0.12); }
   .btn-ghost {
     background:rgba(255,255,255,0.06); color:#fff;
     border:1px solid rgba(255,255,255,0.14);
@@ -411,15 +420,34 @@
   }
   .blind-text.fading { opacity:0; }
 
+  .badge .b-short { display:none; }
   @media (max-width:900px) {
     h1 { font-size:46px; }
-    .badges { flex-wrap:wrap; justify-content:center; gap:12px; }
-    .badge { font-size:14px; padding:11px 18px; }
-    header { padding:18px 20px; }
+    .badge .b-full { display:none; }
+    .badge .b-short { display:inline; }
+    .badges { flex-wrap:nowrap; justify-content:center; gap:8px; }
+    .badge { font-size:12px; padding:8px 12px; white-space:nowrap; }
+    header { padding:16px 18px; }
     .nav-links { display:none; }
     .float-card { display:none; }
     .subtitle { font-size:16px; padding:0 20px; }
     .cta { font-size:18px; padding:18px 32px; }
+    /* smaller header buttons so their text fits */
+    .nav-right { gap:8px; }
+    .btn-ghost, .btn-white { font-size:13px; padding:8px 14px; border-radius:16px; }
+    /* hamburger shown on mobile */
+    .nav-burger { display:inline-flex; }
+    /* brand logos in a single row */
+    .brand-circles { flex-wrap:nowrap; gap:14px; overflow:hidden; margin-bottom:clamp(20px,4vh,44px); }
+    .brand-circles svg { height:22px; }
+  }
+  @media (max-width:560px) {
+    h1 { font-size:30px; letter-spacing:-0.5px; }
+    .badge { font-size:11px; padding:7px 10px; }
+    .badges { gap:6px; }
+    .btn-ghost, .btn-white { font-size:12px; padding:7px 12px; }
+    .brand-circles { gap:10px; }
+    .brand-circles svg { height:18px; }
   }
 
   /* ===== Cases section ===== */
@@ -1722,6 +1750,9 @@
     <div class="nav-right">
       <button class="btn-ghost">Try free</button>
       <button class="btn-white">Sign in</button>
+      <button class="nav-burger" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </header>
 
@@ -1793,9 +1824,9 @@
     </div>
 
     <div class="badges">
-      <div class="badge">10M+ SKUs processed</div>
-      <div class="badge">15+ yrs in E-commerce</div>
-      <div class="badge">176 brands in portfolio</div>
+      <div class="badge"><span class="b-full">10M+ SKUs processed</span><span class="b-short">10M+ SKUs</span></div>
+      <div class="badge"><span class="b-full">15+ yrs in E-commerce</span><span class="b-short">15+ yrs</span></div>
+      <div class="badge"><span class="b-full">176 brands in portfolio</span><span class="b-short">176 brands</span></div>
     </div>
 
     <h1>
@@ -2568,7 +2599,7 @@ function fcClose(){
   else document.addEventListener('DOMContentLoaded',boot);
 })();
 
-var phrases=["Create Listings That Convert","Enhance Listing To Rank Higher","Migrate Listing To Outsell Rivals"];
+var phrases=["Create Listings That Convert","Enhance Listing To\u00A0Rank Higher","Migrate Listing To\u00A0Outsell Rivals"];
 var bi=0;
 setInterval(function(){
   var el=document.querySelector('#blinds .blind-text');
