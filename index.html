@@ -472,18 +472,21 @@
     .askbar.focused:has(.ask-thumbs .ask-thumb) { width:calc(100vw - 80px); max-width:calc(100vw - 80px); }
     .ask-chips { max-width:calc(100vw - 80px); }
     /* logo closer to the hamburger */
-    .nav-left { gap:14px; }
+    .nav-left { gap:8px; }
+    /* pull the whole left cluster toward the edge without clipping */
+    header { padding:16px 18px 16px 8px; }
+    .nav-left svg { margin-left:0; }
     /* smaller header buttons so their text fits */
     .nav-right { gap:8px; }
     .btn-ghost, .btn-white { font-size:13px; padding:8px 14px; border-radius:16px; }
     /* hamburger shown on mobile */
     .nav-burger { display:inline-flex; }
-    /* brand logos in a single row, tighter spacing (half) */
+    /* brand logos in a single row, wider spacing (+15px between) */
     .brand-circles {
       flex-wrap:nowrap;
       justify-content:space-between;
       gap:0;
-      width:min(62%, 440px);
+      width:min(78%, 500px);
       margin-left:auto; margin-right:auto;
       overflow:hidden;
     }
@@ -1848,7 +1851,7 @@
 
   <section class="hero">
     <div class="hero-main">
-    <div class="trusted-label">Trusted by Top Brands &amp; tens of thousands of sellers</div>
+    <div class="trusted-label">Trusted by brands &amp; thousands of sellers</div>
     <div class="brand-circles">
       <svg viewBox="0 0 49 34" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M40.3181 18.0274H42.5531V20.1066C42.1432 20.263 41.3379 20.4195 40.5746 20.4195C38.1024 20.4195 37.2803 19.1645 37.2803 16.6159C37.2803 14.1836 38.0629 12.7523 40.5328 12.7523C41.9094 12.7523 42.6903 13.1842 43.3377 14.0078L45.0454 12.4387C44.0027 10.9517 42.1824 10.501 40.4735 10.501C36.6309 10.4994 34.6107 12.5953 34.6107 16.5956C34.6107 20.576 36.4363 22.7338 40.4527 22.7338C42.2972 22.7338 44.0999 22.2643 45.0816 21.5763V15.8114H40.3181V18.0274ZM28.5936 20.2433H34.2819V22.5573H25.8486V10.6754H28.5938L28.5936 20.2433Z" fill="#6B6C6B"/>
