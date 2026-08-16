@@ -417,10 +417,11 @@
   .askbar.on-light .plus:hover { color:rgba(0,0,0,0.85); }
   .askbar.on-yellow .plus:hover { color:rgba(0,0,0,0.8); }
   .askbar input {
-    flex:1; background:none; border:none; outline:none;
+    flex:1; min-width:0; background:none; border:none; outline:none;
     color:rgba(255,255,255,0.85);
     font-family:inherit; font-size:16px;
   }
+  .askbar .send { flex:0 0 auto; }
   .askbar input::placeholder { color:rgba(255,255,255,0.45); }
   /* dark theme of the bar when it floats over a light section */
   .askbar.on-light {
@@ -466,7 +467,7 @@
 
   .badge .b-short { display:none; }
   @media (max-width:900px) {
-    h1 { font-size:62px; }
+    h1 { font-size:46px; }
     .trusted-label { margin-top:14px; }
     .badge .b-full { display:none; }
     .badge .b-short { display:inline; }
@@ -477,8 +478,8 @@
     .float-card { display:none; }
     .subtitle { font-size:16px; padding:0 20px; }
     .cta { font-size:13px; padding:13px 22px; }
-    /* narrower ask-bar (-40%) then +5%; running gradient border; nudged down */
-    .askbar { width:214px; position:relative; }
+    /* narrower ask-bar then widened; running gradient border; nudged down; shorter */
+    .askbar { width:240px; position:relative; padding:6px 6px 6px 16px; }
     .askbar-wrap { padding-bottom:env(safe-area-inset-bottom, 0px); }
     .askbar.focused { width:calc(100vw - 80px); max-width:calc(100vw - 80px); }
     .askbar:has(.ask-thumbs .ask-thumb),
@@ -522,7 +523,7 @@
     .brand-circles svg { height:31px; flex:0 0 auto; }
   }
   @media (max-width:560px) {
-    h1 { font-size:40px; letter-spacing:-0.5px; }
+    h1 { font-size:30px; letter-spacing:-0.5px; }
     .badge { font-size:11px; padding:7px 10px; }
     .badges { gap:6px; }
     .btn-ghost, .btn-white { font-size:12px; padding:7px 12px; }
