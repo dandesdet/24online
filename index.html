@@ -733,6 +733,9 @@
   }
   .migrate-card.revealed { opacity:1; transform:translateY(0); }
   @media (max-width:900px) {
+    /* full-bleed carousel: drop the section side padding, keep text/logos padded */
+    .migrate { padding-left:0; padding-right:0; }
+    .migrate h2, .migrate .migrate-sub, .migrate-logos { padding-left:24px; padding-right:24px; }
     /* cards are always visible in the swipe carousel (reveal offset would hide them) */
     .migrate-card.reveal-left,
     .migrate-card.reveal-right {
@@ -755,12 +758,12 @@
     .migrate-cards::-webkit-scrollbar { display:none; }
     .migrate-cards .reveal-right { margin-top:0; }
     .migrate-card {
-      flex:0 0 min(500px, 94vw);   /* large screenshot up to 500px, edge-to-edge on narrow */
+      flex:0 0 min(500px, 97vw);   /* large screenshot, edge-to-edge on narrow */
       max-width:500px;
-      width:min(500px, 94vw);
+      width:min(500px, 97vw);
       border-radius:16px;
       box-shadow:none;   /* remove the drop shadow */
-      scroll-snap-align:center;
+      scroll-snap-align:start;
     }
     .migrate-logos { gap:24px; flex-wrap:wrap; }
     .mlogo-pair img { width:57px; height:57px; }
