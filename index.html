@@ -744,21 +744,23 @@
       flex-direction:row;
       flex-wrap:nowrap;
       align-items:flex-start;
-      gap:14px;
+      gap:12px;
       overflow-x:auto;
       scroll-snap-type:x mandatory;
       -webkit-overflow-scrolling:touch;
       scrollbar-width:none;
-      padding:0 16px;
-      scroll-padding-left:16px;
+      padding:0;
+      scroll-padding-left:0;
     }
     .migrate-cards::-webkit-scrollbar { display:none; }
     .migrate-cards .reveal-right { margin-top:0; }
     .migrate-card {
-      flex:0 0 88%;      /* first fills most of the width, the next one peeks on the right */
-      max-width:88%;
-      width:88%;
-      scroll-snap-align:start;
+      flex:0 0 min(500px, 94vw);   /* large screenshot up to 500px, edge-to-edge on narrow */
+      max-width:500px;
+      width:min(500px, 94vw);
+      border-radius:16px;
+      box-shadow:none;   /* remove the drop shadow */
+      scroll-snap-align:center;
     }
     .migrate-logos { gap:24px; flex-wrap:wrap; }
     .mlogo-pair img { width:57px; height:57px; }
