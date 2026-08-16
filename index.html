@@ -465,8 +465,12 @@
     .float-card { display:none; }
     .subtitle { font-size:16px; padding:0 20px; }
     .cta { font-size:13px; padding:13px 22px; }
-    /* narrower ask-bar (-40%) */
+    /* narrower ask-bar (-40%); on focus it grows but stays within the screen (~40px sides) */
     .askbar { width:204px; }
+    .askbar.focused { width:calc(100vw - 80px); max-width:calc(100vw - 80px); }
+    .askbar:has(.ask-thumbs .ask-thumb),
+    .askbar.focused:has(.ask-thumbs .ask-thumb) { width:calc(100vw - 80px); max-width:calc(100vw - 80px); }
+    .ask-chips { max-width:calc(100vw - 80px); }
     /* logo closer to the hamburger */
     .nav-left { gap:14px; }
     /* smaller header buttons so their text fits */
