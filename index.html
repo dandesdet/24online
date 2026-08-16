@@ -564,14 +564,21 @@
     text-align:center;
   }
   @media (max-width:700px) {
+    .cases-frame { inset:19px; border-radius:30px; }
     .glass-ellipse {
-      width:min(560px, 90vw);
-      height:auto; aspect-ratio:640.52 / 786.92;
-      left:50%; transform:translateX(-50%) rotate(66.87deg);
+      width:min(440px, 86vw);
+      height:min(440px, 86vw);
+      aspect-ratio:1;
+      left:50%; transform:translateX(-50%);
+      top:200px;
     }
-    .cases-text { left:50%; width:80vw; }
-    .cases-text h2 { font-size:32px; }
-    .cases-text p { font-size:18px; max-width:92%; }
+    .cases-text {
+      left:50%;
+      top:calc(200px + min(440px, 86vw) / 2);
+      width:min(360px, 74vw);
+    }
+    .cases-text h2 { font-size:26px; margin-bottom:12px; }
+    .cases-text p { font-size:15px; max-width:100%; line-height:1.35; }
   }
 
   /* ===== Migrate section (third floor) ===== */
