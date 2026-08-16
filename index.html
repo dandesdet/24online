@@ -516,11 +516,13 @@
       flex-wrap:nowrap;
       justify-content:space-between;
       gap:0;
-      width:min(78%, 500px);
+      width:min(90%, 540px);
       margin-left:auto; margin-right:auto;
       overflow:hidden;
     }
-    .brand-circles svg { height:31px; flex:0 0 auto; }
+    .brand-circles svg { height:27px; flex:0 0 auto; }
+    /* less empty space under the marquee */
+    .marquee { padding-bottom:90px; }
   }
   @media (max-width:560px) {
     h1 { font-size:30px; letter-spacing:-0.5px; }
@@ -612,6 +614,7 @@
     text-align:center;
   }
   @media (max-width:700px) {
+    .cases { min-height:600px; }
     .cases-frame { inset:19px; border-radius:30px; }
     .glass-ellipse {
       width:min(440px, 86vw);
