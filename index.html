@@ -733,6 +733,12 @@
   }
   .migrate-card.revealed { opacity:1; transform:translateY(0); }
   @media (max-width:900px) {
+    /* cards are always visible in the swipe carousel (reveal offset would hide them) */
+    .migrate-card.reveal-left,
+    .migrate-card.reveal-right {
+      opacity:1 !important;
+      transform:none !important;
+    }
     /* horizontal swipe: 2nd screenshot sits to the RIGHT of the 1st and peeks in */
     .migrate-cards {
       flex-direction:row;
