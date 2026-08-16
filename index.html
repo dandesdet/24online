@@ -92,6 +92,15 @@
   }
   .nav-burger:hover { background:transparent; opacity:0.8; }
   /* mobile dropdown menu */
+  /* full-screen blur behind the menu so it's the focus */
+  .menu-overlay {
+    display:none;
+    position:fixed; inset:0; z-index:7900;
+    background:rgba(11,16,22,0.55);
+    backdrop-filter:blur(10px) saturate(120%);
+    -webkit-backdrop-filter:blur(10px) saturate(120%);
+  }
+  .menu-overlay.open { display:block; }
   .mobile-menu {
     display:none;
     position:absolute; top:72px; left:16px; right:16px; z-index:8000;
@@ -110,11 +119,8 @@
     font-size:17px; padding:14px 12px; border-radius:10px;
   }
   .mobile-menu a:hover { background:rgba(255,255,255,0.06); color:#fff; }
-  .mobile-menu-cta {
-    display:flex; gap:10px; margin-top:8px; padding-top:12px;
-    border-top:1px solid rgba(255,255,255,0.10);
-  }
-  .mobile-menu-cta .btn-ghost, .mobile-menu-cta .btn-white { flex:1; font-size:15px; padding:12px; }
+  /* burger turns yellow when the menu is open */
+  .nav-burger.active svg path { stroke:#FCCA2E; }
   .btn-ghost {
     background:rgba(255,255,255,0.06); color:#fff;
     border:1px solid rgba(255,255,255,0.14);
@@ -465,12 +471,29 @@
     .float-card { display:none; }
     .subtitle { font-size:16px; padding:0 20px; }
     .cta { font-size:13px; padding:13px 22px; }
-    /* narrower ask-bar (-40%); on focus it grows but stays within the screen (~40px sides) */
-    .askbar { width:204px; }
+    /* narrower ask-bar (-40%) then +5%; running gradient border; nudged down */
+    .askbar { width:214px; position:relative; }
+    .askbar-wrap { padding-bottom:env(safe-area-inset-bottom, 0px); }
     .askbar.focused { width:calc(100vw - 80px); max-width:calc(100vw - 80px); }
     .askbar:has(.ask-thumbs .ask-thumb),
     .askbar.focused:has(.ask-thumbs .ask-thumb) { width:calc(100vw - 80px); max-width:calc(100vw - 80px); }
     .ask-chips { max-width:calc(100vw - 80px); }
+    /* animated conic gradient border running around the pill */
+    .askbar::before {
+      content:"";
+      position:absolute; inset:-2px;
+      border-radius:999px;
+      padding:2px;
+      background:conic-gradient(from var(--ang,0deg),
+        #FCCA2E, #ff7ac2, #4aa8ff, #7CFFB2, #FCCA2E);
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude;
+      animation:askSpin 3s linear infinite;
+      pointer-events:none; z-index:-1;
+    }
+  }
+  @property --ang { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+  @keyframes askSpin { to { --ang:360deg; } }
     /* logo closer to the hamburger */
     .nav-left { gap:8px; }
     /* pull the whole left cluster toward the edge without clipping */
@@ -1813,15 +1836,12 @@
     </div>
   </header>
 
+  <div class="menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="https://24.online/about">About</a>
     <a href="https://24.online/billing">Pricing</a>
     <a href="https://24.online/prompt-library">Prompt Library</a>
     <a href="https://24.online/affiliate">Affiliate</a>
-    <div class="mobile-menu-cta">
-      <button class="btn-ghost">Try free</button>
-      <button class="btn-white">Sign in</button>
-    </div>
   </div>
 
   <div class="float-card" id="floatCard">
@@ -3107,19 +3127,22 @@ var phrases=["Create Listings That\u00A0Convert","Enhance Listing To\u00A0Rank H
 <script>
 function toggleMobileMenu(){
   var m=document.getElementById('mobileMenu');
+  var o=document.getElementById('menuOverlay');
   var b=document.getElementById('navBurger');
   if(!m) return;
   var open=m.classList.toggle('open');
-  if(b) b.setAttribute('aria-expanded', open?'true':'false');
+  if(o) o.classList.toggle('open', open);
+  if(b){ b.classList.toggle('active', open); b.setAttribute('aria-expanded', open?'true':'false'); }
 }
-// close on outside click or link click
+// close on link click
 document.addEventListener('click',function(e){
   var m=document.getElementById('mobileMenu');
+  var o=document.getElementById('menuOverlay');
   var b=document.getElementById('navBurger');
   if(!m||!m.classList.contains('open')) return;
-  if(e.target.closest('#mobileMenu a')){ m.classList.remove('open'); if(b) b.setAttribute('aria-expanded','false'); return; }
-  if(!e.target.closest('#mobileMenu') && !e.target.closest('#navBurger')){
-    m.classList.remove('open'); if(b) b.setAttribute('aria-expanded','false');
+  if(e.target.closest('#mobileMenu a')){
+    m.classList.remove('open'); if(o)o.classList.remove('open');
+    if(b){ b.classList.remove('active'); b.setAttribute('aria-expanded','false'); }
   }
 });
 </script>
