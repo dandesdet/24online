@@ -758,9 +758,9 @@
     .migrate-cards::-webkit-scrollbar { display:none; }
     .migrate-cards .reveal-right { margin-top:0; }
     .migrate-card {
-      flex:0 0 min(500px, 97vw);   /* large screenshot, edge-to-edge on narrow */
-      max-width:500px;
-      width:min(500px, 97vw);
+      flex:0 0 min(460px, calc(97vw - 40px));   /* -40px so the next card peeks more */
+      max-width:460px;
+      width:min(460px, calc(97vw - 40px));
       border-radius:16px;
       box-shadow:none;   /* remove the drop shadow */
       scroll-snap-align:start;
