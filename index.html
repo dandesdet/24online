@@ -84,12 +84,13 @@
   .nav-burger {
     display:none;
     align-items:center; justify-content:center;
-    width:40px; height:40px; border-radius:12px;
-    background:rgba(255,255,255,0.06); color:#fff;
-    border:1px solid rgba(255,255,255,0.14);
+    width:40px; height:40px;
+    background:transparent; color:#fff;
+    border:none;
     cursor:pointer;
+    padding:0;
   }
-  .nav-burger:hover { background:rgba(255,255,255,0.12); }
+  .nav-burger:hover { background:transparent; opacity:0.8; }
   /* mobile dropdown menu */
   .mobile-menu {
     display:none;
@@ -458,24 +459,27 @@
     .badge .b-full { display:none; }
     .badge .b-short { display:inline; }
     .badges { flex-wrap:nowrap; justify-content:center; gap:8px; }
-    .badge { font-size:12px; padding:8px 12px; white-space:nowrap; }
+    .badge { font-size:12px; padding:8px 18px; white-space:nowrap; }
     header { padding:16px 18px; }
     .nav-links { display:none; }
     .float-card { display:none; }
     .subtitle { font-size:16px; padding:0 20px; }
     .cta { font-size:13px; padding:13px 22px; }
+    /* narrower ask-bar (-40%) */
+    .askbar { width:204px; }
+    /* logo closer to the hamburger */
+    .nav-left { gap:14px; }
     /* smaller header buttons so their text fits */
     .nav-right { gap:8px; }
     .btn-ghost, .btn-white { font-size:13px; padding:8px 14px; border-radius:16px; }
     /* hamburger shown on mobile */
     .nav-burger { display:inline-flex; }
-    /* brand logos in a single row */
+    /* brand logos in a single row, tighter spacing (half) */
     .brand-circles {
       flex-wrap:nowrap;
       justify-content:space-between;
       gap:0;
-      width:calc(100% - 40px);
-      max-width:720px;
+      width:min(62%, 440px);
       margin-left:auto; margin-right:auto;
       overflow:hidden;
     }
@@ -1775,7 +1779,7 @@
   <header>
     <div class="nav-left">
       <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false" onclick="toggleMobileMenu()">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 9h16M4 15h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
       <svg style="width:98px;height:auto;display:block" viewBox="0 0 154 38" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#logo24_clip0_91_204)">
@@ -1888,7 +1892,7 @@
 
     <h1>
       <span class="yellow blinds" id="blinds">
-        <span class="blind-text">Create Listings That Convert</span>
+        <span class="blind-text">Create Listings That&nbsp;Convert</span>
       </span><br>
       <span class="white">100x Faster. 100x Cheaper.</span>
     </h1>
@@ -2656,7 +2660,7 @@ function fcClose(){
   else document.addEventListener('DOMContentLoaded',boot);
 })();
 
-var phrases=["Create Listings That Convert","Enhance Listing To\u00A0Rank Higher","Migrate Listing To\u00A0Outsell Rivals"];
+var phrases=["Create Listings That\u00A0Convert","Enhance Listing To\u00A0Rank Higher","Migrate Listing To\u00A0Outsell Rivals"];
 (function(){
   var wrap=document.getElementById('blinds');
   if(!wrap) return;
