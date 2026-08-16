@@ -733,12 +733,30 @@
   }
   .migrate-card.revealed { opacity:1; transform:translateY(0); }
   @media (max-width:900px) {
-    .migrate-cards { flex-direction:column; align-items:center; gap:24px; }
+    /* horizontal swipe: 2nd screenshot sits to the RIGHT of the 1st and peeks in */
+    .migrate-cards {
+      flex-direction:row;
+      flex-wrap:nowrap;
+      align-items:flex-start;
+      gap:14px;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      padding:0 16px;
+      scroll-padding-left:16px;
+    }
+    .migrate-cards::-webkit-scrollbar { display:none; }
     .migrate-cards .reveal-right { margin-top:0; }
-    .migrate-card { max-width:520px; width:100%; }
+    .migrate-card {
+      flex:0 0 88%;      /* first fills most of the width, the next one peeks on the right */
+      max-width:88%;
+      width:88%;
+      scroll-snap-align:start;
+    }
     .migrate-logos { gap:24px; flex-wrap:wrap; }
-    .mlogo-pair img { width:38px; height:38px; }
-    .mlogo-pair.active img { width:46px; height:46px; }
+    .mlogo-pair img { width:57px; height:57px; }
+    .mlogo-pair.active img { width:69px; height:69px; }
   }
   /* ===== Create Listing section (fourth floor) ===== */
   .create {
