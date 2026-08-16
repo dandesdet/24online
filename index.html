@@ -832,14 +832,17 @@
     .photo-stack {
       position:static; height:auto; width:100%;
       margin:14px 0 0;
-      display:flex; justify-content:center; align-items:center; gap:10px;
+      padding:0 24px;
+      display:flex; justify-content:center; align-items:center; gap:0;
     }
     .photo-stack .snap {
-      position:static; width:31%; max-width:130px;
+      position:static; width:30%; max-width:120px;
+      box-shadow:none;   /* no drop shadow */
     }
-    .photo-stack .snap.s1 { transform:rotate(-5deg); }
-    .photo-stack .snap.s2 { transform:rotate(2deg); }
-    .photo-stack .snap.s3 { transform:rotate(5deg); }
+    /* slight overlap between the three photos */
+    .photo-stack .snap.s1 { transform:rotate(-5deg); margin-right:-14px; z-index:1; }
+    .photo-stack .snap.s2 { transform:rotate(2deg); z-index:3; }
+    .photo-stack .snap.s3 { transform:rotate(5deg); margin-left:-14px; z-index:1; }
     /* vertical arrow between photos and the result */
     .create-arrow {
       position:static; display:block;
