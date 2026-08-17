@@ -863,12 +863,12 @@
     .create-arrow .arrow-desktop { display:none; }  /* hide the png on mobile */
     .create-arrow .arrow-mobile { display:block; }
     .create-arrow svg { width:100%; height:auto; display:block; }
-    /* bigger result, smaller corner radius; width = A+ frame inset (19px from screen edges) */
+    /* bigger result, smaller corner radius; fills the padded content box (symmetric air) */
     .create-card {
-      width:calc(100vw - 38px);
-      max-width:calc(100vw - 38px);
-      margin-left:calc(50% - 50vw + 19px);
-      margin-right:calc(50% - 50vw + 19px);
+      width:100%;
+      max-width:100%;
+      margin-left:auto;
+      margin-right:auto;
       border-radius:16px;
     }
     .create-right { display:block; }
@@ -1393,7 +1393,7 @@
   }
   @media (max-width:768px) {
     .whygpt h2 { margin-bottom:50px; }
-    .whygpt-stack { height:280px; }
+    .whygpt-stack { height:280px; width:calc(100vw - 80px); }
     .wg-card { padding:36px 26px 56px; }
   }
   /* ===== Powered by AI models section (eleventh floor) ===== */
