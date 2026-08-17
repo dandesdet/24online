@@ -3190,8 +3190,8 @@ var phrases=["Create Listings That\u00A0Convert","Enhance Listing To\u00A0Rank H
   // wire the clone's burger to the same mobile menu
   var sb=holder.querySelector('.sticky-burger');
   if(sb){
-    function tap(e){ e.preventDefault(); toggleMobileMenu(); }
-    sb.addEventListener('pointerup', tap);
+    function tap(e){ e.preventDefault(); e.stopPropagation(); toggleMobileMenu(); }
+    sb.addEventListener('click', tap);
     sb.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleMobileMenu(); } });
   }
 
