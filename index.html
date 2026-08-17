@@ -74,7 +74,7 @@
   #stickyHeader header { padding:16px 18px; }
   .logo-link { display:inline-flex; align-items:center; text-decoration:none; }
   .nav-left { display:flex; align-items:center; gap:40px; }
-  @media (min-width:901px){ .nav-left svg { margin-right:0; } .nav-left .nav-links { margin-left:24px; } }
+  @media (min-width:901px){ .nav-left svg { margin-right:0; } .nav-left .nav-links { margin-left:24px; } .logo-link { margin-left:20px; transform:translateY(10px); } }
   .nav-links { display:flex; gap:20px; }
   .nav-links a {
     color:rgba(255,255,255,0.82); text-decoration:none;
@@ -576,10 +576,10 @@
   }
   .glass-ellipse {
     position:absolute;
-    width:640.52px;
-    height:786.92px;
-    left:calc(50% - 640.52px / 2);
-    top:229.36px;
+    width:544.44px;
+    height:668.88px;
+    left:calc(50% - 544.44px / 2);
+    top:288.38px;
     border-radius:50%;
     background:rgba(255,255,255,0.5);
     backdrop-filter:blur(28px) saturate(115%);
@@ -1363,21 +1363,27 @@
   }
   .whygpt-stack {
     position:relative;
-    width:min(680px, 90vw);
-    height:300px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    width:min(760px, 92vw);
     margin:0 auto;
   }
   .wg-card {
-    position:absolute; inset:0;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    padding:44px 60px 66px;
+    padding:44px 40px;
+    min-height:200px;
     border-radius:26px;
     background:#fafafa;
     border:1px solid #c6c6c6;
     box-shadow:none;
-    will-change:transform, opacity, filter;
+    opacity:0;
+    transform:translateY(60px);
+    transition:transform .7s cubic-bezier(.22,.61,.36,1), opacity .7s ease;
+    will-change:transform, opacity;
   }
+  .wg-card.in { opacity:1; transform:translateY(0); }
   .wg-card p {
     font-family:'Graphik RBC',sans-serif;
     color:#222;
@@ -1387,14 +1393,14 @@
   .wg-badge-fixed {
     display:block;
     width:56px; height:56px;
-    margin:-10px auto 0;
+    margin:28px auto 0;
     position:relative; z-index:200;
     filter:drop-shadow(0 6px 16px rgba(0,0,0,0.12));
   }
   @media (max-width:768px) {
     .whygpt h2 { margin-bottom:50px; }
-    .whygpt-stack { height:280px; width:calc(100vw - 80px); }
-    .wg-card { padding:36px 26px 56px; }
+    .whygpt-stack { grid-template-columns:1fr; gap:16px; width:calc(100vw - 80px); }
+    .wg-card { padding:36px 26px; min-height:0; }
   }
   /* ===== Powered by AI models section (eleventh floor) ===== */
   /* ---- founders ---- */
@@ -2615,7 +2621,6 @@ function updateAskSend(){
         <a href="#createSection">Gallery Slides</a>
         <a href="#aplus">A+ Content</a>
         <a href="#tryon">Virtual Try-On</a>
-        <a href="#banners">Banner Adaptation</a>
         <a href="#brandkit">Brand Kit</a>
       </div>
 
@@ -3083,7 +3088,7 @@ var phrases=["Create Listings That\u00A0Convert","Enhance Listing To\u00A0Rank H
   update();
 })();
 
-/* ===== "Why not ChatGPT": scroll-driven card deck ===== */
+/* ===== "Why not ChatGPT": 2x2 grid, cards rise on scroll and pin ===== */
 (function(){
   var section=document.getElementById('whygptSection');
   var stack=document.getElementById('wgStack');
@@ -3092,58 +3097,16 @@ var phrases=["Create Listings That\u00A0Convert","Enhance Listing To\u00A0Rank H
   var N=cards.length;
   if(!N) return;
 
-  var PER=150;           // px of scroll to fly one card away (fast)
-  var FAN=16, SC=0.05, ROT=6; // fan-out offsets for the resting deck
-
-  function render(prog){ // prog: continuous 0..(N-1)
-    cards.forEach(function(card, i){
-      var d=i-prog; // >0 = still in deck (below top), <0..0 = flying/flown
-      if(d<=-1){
-        // fully flown past the viewer — huge, blurred, gone
-        card.style.transform='scale(1.9)';
-        card.style.opacity='0';
-        card.style.filter='blur(24px)';
-        card.style.zIndex=String(300-i);
-        return;
+  function update(){
+    var vh=window.innerHeight||document.documentElement.clientHeight;
+    cards.forEach(function(card){
+      var r=card.getBoundingClientRect();
+      // reveal (and pin) once the card's own top has risen above 82% of the viewport
+      if(r.top < vh*0.82){
+        card.classList.add('in');   // stays in — pinned, no re-hide
       }
-      if(d<0){
-        // in flight toward the viewer: grows past the screen, blurs, fades out
-        var f=-d; // 0..1
-        var sc=1+0.9*f;          // 1 → 1.9, rushing toward the camera
-        var blur=24*f;           // 0 → 24px
-        card.style.transform='scale('+sc.toFixed(3)+')';
-        card.style.opacity=String(1-f);
-        card.style.filter='blur('+blur.toFixed(1)+'px)';
-        card.style.zIndex=String(300-i); // stays on top as it flies at you
-        return;
-      }
-      // resting deck: fan out behind, alternating rotation for a messy stack
-      var off=Math.min(d, 3);
-      var ty=off*FAN;
-      var sc=1-off*SC;
-      var dir=(i%2)?1:-1;
-      var rot=(off===0)?0:(dir*ROT*off);
-      card.style.transform='translateY('+ty+'px) translateX('+(dir*off*6)+'px) scale('+sc+') rotate('+rot+'deg)';
-      card.style.opacity=String(Math.max(0, 1-off*0.22));
-      card.style.filter='none';
-      card.style.zIndex=String(100-Math.round(d));
     });
   }
-
-  function update(){
-    var r=section.getBoundingClientRect();
-    var vh=window.innerHeight||document.documentElement.clientHeight;
-    // start flipping when the section top reaches 40% down the viewport,
-    // finish (last card gone) exactly when the section top reaches 0 (hits the top)
-    var start=vh*0.40;
-    var span=start;                    // total scroll distance from start (r.top=start) to end (r.top=0)
-    var per=span/(N-1);                // px of scroll per card so the deck empties right at r.top=0
-    var scrolled=start - r.top;        // grows as we scroll down
-    var prog=scrolled/per;
-    prog=Math.max(0, Math.min(N-1, prog));
-    render(prog);
-  }
-  render(0);
   window.addEventListener('scroll', update, {passive:true});
   window.addEventListener('resize', update);
   update();
