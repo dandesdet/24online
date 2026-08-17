@@ -90,6 +90,7 @@
     cursor:pointer;
     padding:0;
   }
+  @media (min-width:901px){ .nav-burger { display:none !important; } }
   .nav-burger:hover { background:transparent; opacity:0.8; }
   /* mobile dropdown menu */
   /* fast tap response on mobile controls */
@@ -218,7 +219,7 @@
     margin-top:clamp(-36px, -3vh, -12px);
     margin-bottom:6px;
   }
-  .brand-circles { display:flex; align-items:center; justify-content:center; gap:25px; flex-wrap:wrap; margin-bottom:clamp(24px, 5vh, 60px); }
+  .brand-circles { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:clamp(24px, 5vh, 60px); }
   .brand-circles svg {
     height:31px; width:auto; display:block;
     opacity:0.5;
@@ -1568,7 +1569,7 @@
     font-family:'Bricolage Grotesque',sans-serif;
     font-weight:700;
     color:#2b3a4a;
-    font-size:clamp(30px, 6.2vw, 92px);
+    font-size:clamp(34px, 8.5vw, 120px);
     line-height:1.04; letter-spacing:-1.5px;
     margin:0 auto;
     max-width:1300px;
@@ -2560,7 +2561,7 @@ function updateAskSend(){
 </script>
 
 <section class="watermark">
-  <p>Every Product Deserves<br>a Perfect<br>First Impression</p>
+  <p>Every Product<br>Deserves a Perfect<br>First Impression</p>
 </section>
 
 <footer class="footer">
