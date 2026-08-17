@@ -73,7 +73,8 @@
   }
   #stickyHeader.show { transform:translateY(0); }
   #stickyHeader header { padding:14px 40px; }
-  .nav-left { display:flex; align-items:center; gap:44px; }
+  .nav-left { display:flex; align-items:center; gap:40px; }
+  @media (min-width:901px){ .nav-left svg { margin-right:0; } .nav-left .nav-links { margin-left:0; } }
   .nav-links { display:flex; gap:30px; }
   .nav-links a {
     color:rgba(255,255,255,0.82); text-decoration:none;
@@ -220,6 +221,9 @@
     margin-bottom:6px;
   }
   .brand-circles { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:clamp(24px, 5vh, 60px); }
+  @media (min-width:901px){
+    .brand-circles { justify-content:center !important; gap:10px !important; width:auto !important; }
+  }
   .brand-circles svg {
     height:31px; width:auto; display:block;
     opacity:0.5;
@@ -1569,7 +1573,8 @@
     font-family:'Bricolage Grotesque',sans-serif;
     font-weight:700;
     color:#2b3a4a;
-    font-size:clamp(34px, 8.5vw, 120px);
+    font-size:clamp(38px, 9vw, 140px);
+    white-space:nowrap;
     line-height:1.04; letter-spacing:-1.5px;
     margin:0 auto;
     max-width:1300px;
@@ -2465,7 +2470,7 @@ function updateAskSend(){
     <div class="pr-plan">
       <div class="pl-name">Enterprise</div>
       <div class="pl-price custom">Custom</div>
-      <button class="pl-btn">Contact us</button>
+      <a class="pl-btn" href="mailto:hello@24.online">Contact us</a>
       <div class="pl-trusted">Trusted by leading brands</div>
     </div>
   </div>
