@@ -488,7 +488,7 @@
     .cta { font-size:13px; padding:13px 22px; }
     /* narrower ask-bar then widened; running gradient border; nudged down; shorter */
     .askbar { width:240px; position:relative; padding:6px 6px 6px 16px; }
-    .askbar-wrap { padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 6px); }
+    .askbar-wrap { padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 21px); }
     .askbar.focused { width:calc(100vw - 80px); max-width:calc(100vw - 80px); }
     .askbar:has(.ask-thumbs .ask-thumb),
     .askbar.focused:has(.ask-thumbs .ask-thumb) { width:calc(100vw - 80px); max-width:calc(100vw - 80px); }
@@ -1005,18 +1005,18 @@
   .brandctl-group.left  .designmd { left:-30px;  bottom:-40px; }
   .brandctl-group.right .designmd { right:-30px; bottom:-40px; }
   @media (max-width:900px) {
-    .brandctl-stage { gap:70px; }
+    .brandctl-stage { gap:110px; }
     .brandctl-group { width:88vw; }
     .brandctl-group .designmd {
-      width:56%;
+      width:42%;
       left:50%; right:auto;
-      bottom:-65px;
+      bottom:-110px;
       transform:translateX(-50%);
     }
     .brandctl-group.left .designmd,
     .brandctl-group.right .designmd {
       left:50%; right:auto;
-      bottom:-65px;
+      bottom:-110px;
       transform:translateX(-50%);
     }
   }
