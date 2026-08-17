@@ -102,6 +102,9 @@
   .nav-burger:active { opacity:0.6; }
   .mobile-menu a:active { background:rgba(255,255,255,0.12); }
   .btn-white:active, .btn-ghost:active { transform:scale(0.96); }
+  .cta:active, .fcta-btn:active, .pl-btn:active, .ask-chip:active { transform:scale(0.97); opacity:0.9; }
+  .askbar .send:active { transform:scale(0.9); }
+  .faq-q:active { opacity:0.85; }
   /* full-screen dim behind the menu (no heavy blur so it opens instantly) */
   .menu-overlay {
     display:none;
@@ -307,7 +310,7 @@
       transparent 100%);
   }
   .marquee-track {
-    display:flex; align-items:center; gap:50px;
+    display:flex; align-items:center; gap:37.5px;
     width:max-content;
     opacity:0.42;
     animation:scroll 80s linear infinite;
@@ -485,7 +488,7 @@
     .cta { font-size:13px; padding:13px 22px; }
     /* narrower ask-bar then widened; running gradient border; nudged down; shorter */
     .askbar { width:240px; position:relative; padding:6px 6px 6px 16px; }
-    .askbar-wrap { padding-bottom:env(safe-area-inset-bottom, 0px); }
+    .askbar-wrap { padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 6px); }
     .askbar.focused { width:calc(100vw - 80px); max-width:calc(100vw - 80px); }
     .askbar:has(.ask-thumbs .ask-thumb),
     .askbar.focused:has(.ask-thumbs .ask-thumb) { width:calc(100vw - 80px); max-width:calc(100vw - 80px); }
@@ -944,7 +947,7 @@
     margin:0 auto 22px;
   }
   @media (max-width:900px) {
-    .aplus { min-height:820px; }
+    .aplus { min-height:547px; }
     .aplus-frame { inset:19px; border-radius:30px; }
     .aplus-col { width:40vw; }
     .aplus-content h2 { font-size:clamp(40px, 13vw, 90px); letter-spacing:-1px; }
@@ -996,7 +999,16 @@
   @media (max-width:900px) {
     .brandctl-stage { gap:70px; }
     .brandctl-group { width:88vw; }
-    .brandctl-group .designmd { width:44%; }
+    .brandctl-group .designmd {
+      width:56%;
+      left:50%; right:auto;
+      transform:translateX(-50%);
+    }
+    .brandctl-group.left .designmd,
+    .brandctl-group.right .designmd {
+      left:50%; right:auto;
+      transform:translateX(-50%);
+    }
   }
   /* ===== Banner Adaptations section (seventh floor) ===== */
   .banners {
@@ -2809,7 +2821,7 @@ var phrases=["Create Listings That\u00A0Convert","Enhance Listing To\u00A0Rank H
     probe.style.cssText='position:absolute;visibility:hidden;display:flex;';
     document.body.appendChild(probe);
     appendUnit(probe);
-    probe.querySelectorAll('svg').forEach(function(s){s.style.marginRight='50px';});
+    probe.querySelectorAll('svg').forEach(function(s){s.style.marginRight='37.5px';});
     var unitW=probe.getBoundingClientRect().width;
     document.body.removeChild(probe);
     var unitsNeeded=Math.max(2, Math.ceil((2*vw)/unitW)+1);
@@ -3218,19 +3230,17 @@ function toggleMobileMenu(){
   var b=document.getElementById('navBurger');
   var o=document.getElementById('menuOverlay');
   var m=document.getElementById('mobileMenu');
-  // respond on pointerdown (fires on touch immediately, before click)
-  function fastTap(el, fn){
+  function bind(el, fn){
     if(!el) return;
-    el.addEventListener('pointerdown', function(e){ e.preventDefault(); fn(e); }, {passive:false});
+    // pointerup fires once per tap on touch and mouse; no 300ms delay, no double-fire
+    el.addEventListener('pointerup', function(e){ e.preventDefault(); fn(e); });
+    // keyboard access
+    el.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); fn(e); } });
   }
-  fastTap(b, toggleMobileMenu);
-  fastTap(o, toggleMobileMenu); // tap the dim backdrop to close
-  // close when a menu link is tapped (let the navigation happen)
+  bind(b, toggleMobileMenu);
+  bind(o, toggleMobileMenu);
   if(m){
-    m.addEventListener('pointerdown', function(e){
-      var a=e.target.closest('a');
-      if(a){ toggleMobileMenu(); }
-    });
+    m.addEventListener('click', function(e){ if(e.target.closest('a')){ toggleMobileMenu(); } });
   }
 })();
 </script>
