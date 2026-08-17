@@ -1830,12 +1830,14 @@
   }
   .pr-plan .pl-price.custom { font-size:22px; line-height:1.2; }
   .pr-plan .pl-btn {
+    display:block;
     background:#111820; color:#fff;
     border:none; border-radius:9px;
     padding:12px 16px;
     font-family:'Graphik RBC',sans-serif;
     font-weight:600; font-size:14px;
     cursor:pointer; text-align:center;
+    text-decoration:none;
     transition:background .18s ease;
   }
   .pr-plan .pl-btn:hover { background:#000; }
@@ -2428,7 +2430,7 @@ function updateAskSend(){
 </section>
 
 <section class="models">
-  <h2>Powered By The Newest AI Models,<br>Always Up To Date.</h2>
+  <h2>Powered By The Newest AI Models,<br>Always Up To Date</h2>
   <div class="models-row">
     <div class="model-item">
       <img src="assets/ai_openai.png" alt="OpenAI">
@@ -2476,7 +2478,7 @@ function updateAskSend(){
     <div class="pr-plan pr-free">
       <div class="pl-name">Free</div>
       <div class="pl-price">$0 <span class="per">/mo</span></div>
-      <button class="pl-btn">Get started</button>
+      <a class="pl-btn" href="https://24.online/billing">Get started</a>
       <div class="pl-credits">300 credits</div>
     </div>
     <div class="pr-plan">
@@ -3085,7 +3087,7 @@ var phrases=["Create Listings That\u00A0Convert","Enhance Listing To\u00A0Rank H
   update();
 })();
 
-/* ===== "Why not ChatGPT": 2x2 grid, cards rise on scroll and pin ===== */
+/* ===== "Why not ChatGPT": 2x2 grid, cards appear one-by-one on scroll ===== */
 (function(){
   var section=document.getElementById('whygptSection');
   var stack=document.getElementById('wgStack');
@@ -3096,12 +3098,18 @@ var phrases=["Create Listings That\u00A0Convert","Enhance Listing To\u00A0Rank H
 
   function update(){
     var vh=window.innerHeight||document.documentElement.clientHeight;
-    cards.forEach(function(card){
-      var r=card.getBoundingClientRect();
-      // reveal (and pin) once the card's own top has risen above 82% of the viewport
-      if(r.top < vh*0.82){
-        card.classList.add('in');   // stays in — pinned, no re-hide
-      }
+    var r=section.getBoundingClientRect();
+    // progress 0..1: 0 when section top reaches 75% of viewport,
+    // 1 when section top reaches -10% of viewport (well into the scroll)
+    var start=vh*0.75;
+    var end=-vh*0.10;
+    var prog=(start - r.top)/(start - end);
+    prog=Math.max(0, Math.min(1, prog));
+    // reveal cards 1..N strictly in order, one every 1/N of the progress
+    var shown=Math.ceil(prog*N);
+    shown=Math.max(0, Math.min(N, shown));
+    cards.forEach(function(card, i){
+      if(i < shown) card.classList.add('in');
     });
   }
   window.addEventListener('scroll', update, {passive:true});
