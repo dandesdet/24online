@@ -379,13 +379,13 @@
   .askbar {
     display:flex; align-items:center; gap:12px;
     width:340px;
-    border:1.5px solid rgba(255,255,255,0.35);
+    border:1px solid rgba(255,255,255,0.14);
     border-radius:999px;
     padding:9px 9px 9px 18px;
-    background:rgba(20,27,34,0.72);
+    background:rgba(255,255,255,0.06);
     backdrop-filter:blur(16px) saturate(160%);
     -webkit-backdrop-filter:blur(16px) saturate(160%);
-    box-shadow:0 8px 30px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.2);
     transition:width .25s ease, border-color .2s ease, border-width .2s ease, padding .2s ease, box-shadow .2s ease;
   }
   .ask-thumbs { display:flex; align-items:center; gap:6px; flex-shrink:0; }
@@ -428,27 +428,30 @@
   .askbar.on-yellow .plus:hover { color:rgba(0,0,0,0.8); }
   .askbar input {
     flex:1; min-width:0; background:none; border:none; outline:none;
-    color:#fff;
+    color:rgba(255,255,255,0.85);
     font-family:inherit; font-size:16px;
   }
   .askbar .send { flex:0 0 auto; }
-  .askbar input::placeholder { color:rgba(255,255,255,0.62); }
-  .askbar .plus { color:rgba(255,255,255,0.7); }
-  /* keep the bar dark + readable on ANY background (light sections, yellow CTA, images) */
-  .askbar.on-light,
-  .askbar.on-yellow {
-    border-color:rgba(255,255,255,0.4);
-    background:rgba(20,27,34,0.78);
-    box-shadow:0 8px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.18);
+  .askbar input::placeholder { color:rgba(255,255,255,0.45); }
+  /* light theme of the bar when it floats over a light section */
+  .askbar.on-light {
+    border-color:rgba(0,0,0,0.28);
+    background:rgba(255,255,255,0.6);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);
   }
-  .askbar.on-light .plus,
-  .askbar.on-yellow .plus { color:rgba(255,255,255,0.7); }
-  .askbar.on-light input,
-  .askbar.on-yellow input { color:#fff; }
-  .askbar.on-light input::placeholder,
-  .askbar.on-yellow input::placeholder { color:rgba(255,255,255,0.62); }
-  .askbar.on-light.focused,
-  .askbar.on-yellow.focused { border-color:#4aa8ff; }
+  .askbar.on-light .plus { color:rgba(0,0,0,0.6); }
+  .askbar.on-light input { color:rgba(0,0,0,0.92); }
+  .askbar.on-light input::placeholder { color:rgba(0,0,0,0.72); }
+  .askbar.on-light.focused { border-color:#4aa8ff; }
+  .askbar.on-yellow {
+    border-color:#000;
+    background:transparent;
+    box-shadow:none;
+  }
+  .askbar.on-yellow .plus { color:rgba(0,0,0,0.6); }
+  .askbar.on-yellow input { color:rgba(0,0,0,0.9); }
+  .askbar.on-yellow input::placeholder { color:rgba(0,0,0,0.72); }
+  .askbar.on-yellow.focused { border-color:#000; }
   .askbar .send {
     border:none; background:none; padding:0; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
