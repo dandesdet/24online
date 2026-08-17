@@ -952,14 +952,19 @@
   @media (max-width:900px) {
     .aplus { min-height:547px; }
     .aplus-frame { inset:19px; border-radius:30px; }
-    .aplus-col { width:40vw; }
-    /* make the isometric collage fill the shorter mobile section (no empty bottom) */
+    /* softer tilt on mobile so columns stay dense and cover the whole area */
+    .aplus-stage {
+      --tilt-x:-20deg; --turn-y:0deg; --skew-x:-10deg; --skew-v:14deg;
+    }
+    .aplus-col { width:58vw; margin:0 -20vw; }   /* wide + heavy overlap = no gaps between columns */
+    /* make the isometric collage fill the shorter mobile section (no empty area) */
     .aplus-rail {
-      inset:-120%;
+      inset:-160%;
+      opacity:0.55;
       transform:
-        rotateX(var(--tilt-x)) rotateY(var(--turn-y))
+        rotateX(var(--tilt-x))
         skewX(var(--skew-x)) skewY(var(--skew-v))
-        scale(1.9, 1.3);
+        scale(2.4, 1.5);
     }
     .aplus-content h2 { font-size:clamp(40px, 13vw, 90px); letter-spacing:-1px; }
   }
