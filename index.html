@@ -1024,6 +1024,9 @@
   .brandctl-group.left  .designmd { left:-30px;  bottom:-40px; }
   .brandctl-group.right .designmd { right:-30px; bottom:-40px; }
   @media (max-width:900px) {
+    /* full-bleed section on mobile; keep the heading/sub padded */
+    .brandctl { padding-left:0; padding-right:0; }
+    .brandctl h2, .brandctl-sub { padding-left:24px; padding-right:24px; }
     /* horizontal swipe carousel, like the Migrate section */
     .brandctl-stage {
       flex-direction:row;
