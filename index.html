@@ -757,6 +757,14 @@
     /* full-bleed carousel: drop the section side padding, keep text/logos padded */
     .migrate { padding-left:0; padding-right:0; }
     .migrate h2, .migrate .migrate-sub, .migrate-logos { padding-left:24px; padding-right:24px; }
+    /* let the subtitle wrap to as many lines as it needs (no clipping) */
+    .migrate .migrate-sub {
+      height:auto;
+      min-height:3em;
+      overflow:visible;
+      display:block;
+      margin-bottom:40px;
+    }
     /* cards are always visible in the swipe carousel (reveal offset would hide them) */
     .migrate-card.reveal-left,
     .migrate-card.reveal-right {
