@@ -1033,19 +1033,20 @@
       flex-wrap:nowrap;
       justify-content:flex-start;
       align-items:flex-start;
-      gap:12px;
+      gap:0;
       max-width:none;
       margin:0;
-      padding:0 10px 60px;         /* near full-bleed; room for designmd below */
+      padding:0 0 60px;            /* full-bleed, edge to edge */
       overflow-x:auto;
       scroll-snap-type:x mandatory;
       -webkit-overflow-scrolling:touch;
       scrollbar-width:none;
     }
     .brandctl-stage::-webkit-scrollbar { display:none; }
+    .brandctl-group .creative { border-radius:0; }
     .brandctl-group {
-      flex:0 0 calc(100vw - 20px);
-      width:calc(100vw - 20px);
+      flex:0 0 100vw;
+      width:100vw;
       max-width:none;
       margin-bottom:70px;          /* space for the designmd card below the creative */
       scroll-snap-align:center;
