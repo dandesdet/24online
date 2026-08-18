@@ -1010,8 +1010,6 @@
     display:flex; justify-content:center; gap:60px;
     flex-wrap:wrap;
   }
-  .brandctl-group.left  { order:1; }   /* desktop: white on the left, blue on the right */
-  .brandctl-group.right { order:2; }
   .brandctl-group { position:relative; width:520px; max-width:100%; }
   .brandctl-group .creative {
     width:100%; display:block;
@@ -1035,19 +1033,17 @@
       gap:16px;
       max-width:none;
       margin:0;
-      padding:0 20px 60px;         /* room for the designmd cards that hang below */
+      padding:0 16px 60px;         /* near full-bleed; room for designmd below */
       overflow-x:auto;
       scroll-snap-type:x mandatory;
       -webkit-overflow-scrolling:touch;
       scrollbar-width:none;
     }
     .brandctl-stage::-webkit-scrollbar { display:none; }
-    .brandctl-group.right { order:1; }   /* mobile: blue first (default focus) */
-    .brandctl-group.left  { order:2; }
     .brandctl-group {
-      flex:0 0 min(440px, calc(94vw - 40px));
-      width:min(440px, calc(94vw - 40px));
-      max-width:440px;
+      flex:0 0 calc(100vw - 32px);
+      width:calc(100vw - 32px);
+      max-width:none;
       margin-bottom:70px;          /* space for the designmd card below the creative */
       scroll-snap-align:center;
     }
@@ -2372,13 +2368,13 @@ function updateAskSend(){
   <p class="brandctl-sub">Upload your brand kit once — colors, fonts, tone. Every slide comes out on-brand. Don't trust the machine blindly? Take the wheel on any asset.</p>
 
   <div class="brandctl-stage">
-    <div class="brandctl-group right">
-      <img class="creative" src="assets/mentos_blue.png" alt="On-brand creative" loading="lazy">
-      <img class="designmd" src="assets/brand_full.png" alt="Filled brand system" loading="lazy">
-    </div>
     <div class="brandctl-group left">
       <img class="creative" src="assets/mentos_white.png" alt="On-brand creative" loading="lazy">
       <img class="designmd" src="assets/brand_empty.png" alt="Empty brand system" loading="lazy">
+    </div>
+    <div class="brandctl-group right">
+      <img class="creative" src="assets/mentos_blue.png" alt="On-brand creative" loading="lazy">
+      <img class="designmd" src="assets/brand_full.png" alt="Filled brand system" loading="lazy">
     </div>
   </div>
 </section>
@@ -3372,6 +3368,23 @@ function toggleMobileMenu(){
 })();
 
 /* Brand Kit mobile is now a native scroll-snap carousel (no JS needed) */
+/* default the carousel to the blue (with BrandKit) card while keeping white on the left */
+(function(){
+  var stage=document.querySelector('.brandctl-stage');
+  if(!stage) return;
+  function focusBlue(){
+    if(window.matchMedia('(max-width:900px)').matches){
+      var blue=stage.querySelector('.brandctl-group.right');
+      if(blue){
+        // jump (no smooth) so it's already there on first view
+        stage.scrollLeft = blue.offsetLeft - (stage.clientWidth - blue.clientWidth)/2;
+      }
+    }
+  }
+  // run after layout/images settle
+  window.addEventListener('load', focusBlue);
+  setTimeout(focusBlue, 300);
+})();
 </script>
 </body>
 </html>
