@@ -3166,8 +3166,18 @@ var phrases=["Create Listings That\u00A0Convert","Enhance Listing To\u00A0Rank H
   // wire the clone's burger to the same mobile menu
   var sb=holder.querySelector('.sticky-burger');
   if(sb){
-    function tap(e){ e.preventDefault(); e.stopPropagation(); toggleMobileMenu(); }
-    sb.addEventListener('click', tap);
+    var sbTouched=false;
+    sb.addEventListener('touchend', function(e){
+      sbTouched=true;
+      e.preventDefault(); e.stopPropagation();
+      toggleMobileMenu();
+      setTimeout(function(){ sbTouched=false; }, 500);
+    }, {passive:false});
+    sb.addEventListener('click', function(e){
+      if(sbTouched) return;
+      e.stopPropagation();
+      toggleMobileMenu();
+    });
     sb.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleMobileMenu(); } });
   }
 
@@ -3243,9 +3253,19 @@ function toggleMobileMenu(){
   var m=document.getElementById('mobileMenu');
   function bind(el, fn){
     if(!el) return;
-    // click fires reliably on touch (with touch-action:manipulation, no 300ms delay)
-    el.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); fn(e); });
-    // keyboard access
+    var touched=false;
+    el.addEventListener('touchend', function(e){
+      touched=true;
+      e.preventDefault();          // stops the 300ms-later ghost click
+      e.stopPropagation();
+      fn(e);
+      setTimeout(function(){ touched=false; }, 500);
+    }, {passive:false});
+    el.addEventListener('click', function(e){
+      if(touched) return;          // touch already handled it
+      e.stopPropagation();
+      fn(e);
+    });
     el.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); fn(e); } });
   }
   bind(b, toggleMobileMenu);
