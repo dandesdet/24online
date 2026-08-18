@@ -3059,8 +3059,9 @@ var phrases=["Create Listings That\u00A0Convert","Enhance Listing To\u00A0Rank H
     var tileProgress = Math.min(1, t/0.8);          // tiles finish by 80%
     var filledCount = Math.floor(tileProgress*N + 0.0001);
     for(var i=0;i<N;i++) fillTile(tiles[i], i<filledCount);
-    // rows become Ready one-by-one over the whole range, weighted so all done at 100%
-    var readyCount = Math.floor(t*rows.length*1.0 + 0.0001);
+    // rows become Ready one-by-one; all finish by ~82% so none stays stuck on "Work"
+    var rowT = Math.min(1, t/0.82);
+    var readyCount = Math.floor(rowT*rows.length + 0.0001);
     rows.forEach(function(row,idx){
       var on = idx<readyCount;
       row.classList.toggle('is-ready', on);
