@@ -3243,8 +3243,8 @@ function toggleMobileMenu(){
   var m=document.getElementById('mobileMenu');
   function bind(el, fn){
     if(!el) return;
-    // pointerup fires once per tap on touch and mouse; no 300ms delay, no double-fire
-    el.addEventListener('pointerup', function(e){ e.preventDefault(); fn(e); });
+    // click fires reliably on touch (with touch-action:manipulation, no 300ms delay)
+    el.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); fn(e); });
     // keyboard access
     el.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); fn(e); } });
   }
