@@ -2813,6 +2813,13 @@ function hideChips(){
     if(window.__askAttaching){ window.__askAttaching=false; return; }
     showChips();
   });
+  // hide when the input loses focus (covers taps elsewhere on touch devices)
+  inp.addEventListener('blur',function(){
+    // small delay so a tap on a chip/button registers before we collapse
+    setTimeout(function(){
+      if(document.activeElement!==inp && !document.querySelector('.askbar-stack:hover')) hideChips();
+    }, 120);
+  });
   // ESC collapses the bar and removes the caret
   inp.addEventListener('keydown',function(e){
     if(e.key==='Escape'){
@@ -2820,10 +2827,10 @@ function hideChips(){
       inp.blur();
     }
   });
-  // Hide only when focus/click leaves the whole ask stack
-  document.addEventListener('mousedown',function(e){
-    if(!e.target.closest('.askbar-stack')) hideChips();
-  });
+  // Hide when a tap/click lands outside the whole ask stack (mouse + touch)
+  function outside(e){ if(!e.target.closest('.askbar-stack')) hideChips(); }
+  document.addEventListener('mousedown', outside);
+  document.addEventListener('touchstart', outside, {passive:true});
  }catch(err){}
 })();
 var fcCur=0;
