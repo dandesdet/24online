@@ -981,7 +981,30 @@
     }
     .aplus-content h2 { font-size:clamp(40px, 13vw, 90px); letter-spacing:-1px; }
   }
-  /* ===== Brand Control section (sixth floor) ===== */
+  /* carousel arrows (mobile only) */
+  .bc-arrow { display:none; }
+  @media (max-width:900px) {
+    .brandctl { position:relative; }
+    .bc-arrow {
+      display:flex; align-items:center; justify-content:center;
+      position:absolute; top:calc(50% + 20px);
+      transform:translateY(-50%);
+      width:44px; height:44px; z-index:6;
+      border:none; border-radius:50%;
+      background:rgba(17,24,32,0.55);
+      color:#fff; font-size:28px; line-height:1;
+      cursor:pointer;
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+      box-shadow:0 4px 14px rgba(0,0,0,0.25);
+      transition:opacity .2s ease;
+      padding-bottom:3px;
+    }
+    .bc-arrow-prev { left:10px; }
+    .bc-arrow-next { right:10px; }
+    .bc-arrow[disabled] { opacity:0; pointer-events:none; }
+  }
+  /* Brand Control section (sixth floor) */
   .brandctl {
     position:relative;
     background:#ffffff;
@@ -2381,6 +2404,8 @@ function updateAskSend(){
       <img class="designmd" src="assets/brand_full.png" alt="Filled brand system" loading="lazy">
     </div>
   </div>
+  <button class="bc-arrow bc-arrow-prev" id="bcPrev" type="button" aria-label="Previous">‹</button>
+  <button class="bc-arrow bc-arrow-next" id="bcNext" type="button" aria-label="Next">›</button>
 </section>
 
 <section class="banners" id="banners" style="display:none">
@@ -3371,22 +3396,54 @@ function toggleMobileMenu(){
   check();
 })();
 
-/* Brand Kit mobile is now a native scroll-snap carousel (no JS needed) */
-/* default the carousel to the blue (with BrandKit) card while keeping white on the left */
+/* Brand Kit mobile: native scroll-snap carousel + arrow buttons */
 (function(){
   var stage=document.querySelector('.brandctl-stage');
   if(!stage) return;
-  function focusBlue(){
-    if(window.matchMedia('(max-width:900px)').matches){
-      var blue=stage.querySelector('.brandctl-group.right');
-      if(blue){
-        // jump (no smooth) so it's already there on first view
-        stage.scrollLeft = blue.offsetLeft - (stage.clientWidth - blue.clientWidth)/2;
-      }
-    }
+  var cards=[].slice.call(stage.querySelectorAll('.brandctl-group'));
+  var prev=document.getElementById('bcPrev');
+  var next=document.getElementById('bcNext');
+
+  function isMobile(){ return window.matchMedia('(max-width:900px)').matches; }
+  function targetLeft(card){
+    return card.offsetLeft - (stage.clientWidth - card.clientWidth)/2;
   }
-  // run after layout/images settle
+  function currentIndex(){
+    // whichever card center is closest to the viewport center
+    var c = stage.scrollLeft + stage.clientWidth/2;
+    var best=0, bestD=Infinity;
+    cards.forEach(function(card,i){
+      var center=card.offsetLeft + card.clientWidth/2;
+      var d=Math.abs(center-c);
+      if(d<bestD){ bestD=d; best=i; }
+    });
+    return best;
+  }
+  function updateArrows(){
+    if(!prev||!next) return;
+    var i=currentIndex();
+    prev.disabled = (i<=0);
+    next.disabled = (i>=cards.length-1);
+  }
+  function go(dir){
+    var i=currentIndex()+dir;
+    i=Math.max(0, Math.min(cards.length-1, i));
+    stage.scrollTo({ left:targetLeft(cards[i]), behavior:'smooth' });
+  }
+  if(prev) prev.addEventListener('click', function(){ go(-1); });
+  if(next) next.addEventListener('click', function(){ go(1); });
+  stage.addEventListener('scroll', function(){ updateArrows(); }, {passive:true});
+
+  // default the carousel focus to the blue (with BrandKit) card
+  function focusBlue(){
+    if(isMobile()){
+      var blue=stage.querySelector('.brandctl-group.right');
+      if(blue) stage.scrollLeft = targetLeft(blue);
+    }
+    updateArrows();
+  }
   window.addEventListener('load', focusBlue);
+  window.addEventListener('resize', updateArrows);
   setTimeout(focusBlue, 300);
 })();
 </script>
