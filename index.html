@@ -108,13 +108,13 @@
   /* full-screen dim behind the menu (no heavy blur so it opens instantly) */
   .menu-overlay {
     display:none;
-    position:fixed; inset:0; z-index:7900;
+    position:fixed; inset:0; z-index:9100;
     background:rgba(11,16,22,0.66);
   }
   .menu-overlay.open { display:block; }
   .mobile-menu {
     display:none;
-    position:fixed; top:72px; left:16px; right:16px; z-index:8000;
+    position:fixed; top:66px; left:16px; right:16px; z-index:9200;
     flex-direction:column;
     background:rgba(30,42,56,0.96);
     backdrop-filter:blur(20px) saturate(160%);
@@ -1948,14 +1948,6 @@
     </div>
   </header>
 
-  <div class="menu-overlay" id="menuOverlay"></div>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="https://24.online/about">About</a>
-    <a href="https://24.online/billing">Pricing</a>
-    <a href="https://24.online/prompt-library">Prompt Library</a>
-    <a href="https://24.online/affiliate">Affiliate</a>
-  </div>
-
   <div class="float-card" id="floatCard">
     <button class="x" onclick="fcClose()">&times;</button>
     <div class="fc-slides" id="fcSlides">
@@ -3275,5 +3267,13 @@ function toggleMobileMenu(){
   }
 })();
 </script>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://24.online/about">About</a>
+  <a href="https://24.online/billing">Pricing</a>
+  <a href="https://24.online/prompt-library">Prompt Library</a>
+  <a href="https://24.online/affiliate">Affiliate</a>
+</div>
 </body>
 </html>
