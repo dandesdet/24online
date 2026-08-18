@@ -377,11 +377,11 @@
   }
   .ask-chip:hover { background:rgba(255,255,255,0.12); }
   .askbar {
-    display:flex; align-items:center; gap:12px;
+    display:flex; align-items:center; gap:10px;
     width:340px;
     border:1px solid rgba(255,255,255,0.14);
     border-radius:999px;
-    padding:9px 9px 9px 18px;
+    padding:6px 6px 6px 15px;
     background:rgba(255,255,255,0.06);
     backdrop-filter:blur(16px) saturate(160%);
     -webkit-backdrop-filter:blur(16px) saturate(160%);
@@ -419,38 +419,38 @@
     width:420px;
     border-width:2px;
     border-color:#4aa8ff;
-    padding:8px 8px 8px 17px;
+    padding:5px 5px 5px 14px;
     box-shadow:0 0 0 4px rgba(74,168,255,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
   }
-  .askbar .plus { color:rgba(255,255,255,0.6); font-size:20px; cursor:pointer; user-select:none; transition:color .15s ease; line-height:1; }
+  .askbar .plus { color:rgba(255,255,255,0.6); font-size:17px; cursor:pointer; user-select:none; transition:color .15s ease; line-height:1; }
   .askbar .plus:hover { color:rgba(255,255,255,0.95); }
   .askbar.on-light .plus:hover { color:rgba(0,0,0,0.85); }
   .askbar.on-yellow .plus:hover { color:rgba(0,0,0,0.8); }
   .askbar input {
     flex:1; min-width:0; background:none; border:none; outline:none;
     color:rgba(255,255,255,0.85);
-    font-family:inherit; font-size:16px;
+    font-family:inherit; font-size:14px;
   }
   .askbar .send { flex:0 0 auto; }
   .askbar input::placeholder { color:rgba(255,255,255,0.45); }
-  /* light theme of the bar when it floats over a light section */
+  /* dark theme of the bar when it floats over a light section */
   .askbar.on-light {
     border-color:rgba(0,0,0,0.28);
     background:rgba(255,255,255,0.6);
     box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);
   }
-  .askbar.on-light .plus { color:rgba(0,0,0,0.6); }
-  .askbar.on-light input { color:rgba(0,0,0,0.92); }
-  .askbar.on-light input::placeholder { color:rgba(0,0,0,0.72); }
+  .askbar.on-light .plus { color:rgba(0,0,0,0.55); }
+  .askbar.on-light input { color:rgba(0,0,0,0.85); }
+  .askbar.on-light input::placeholder { color:rgba(0,0,0,0.5); }
   .askbar.on-light.focused { border-color:#4aa8ff; }
   .askbar.on-yellow {
     border-color:#000;
     background:transparent;
     box-shadow:none;
   }
-  .askbar.on-yellow .plus { color:rgba(0,0,0,0.6); }
-  .askbar.on-yellow input { color:rgba(0,0,0,0.9); }
-  .askbar.on-yellow input::placeholder { color:rgba(0,0,0,0.72); }
+  .askbar.on-yellow .plus { color:rgba(0,0,0,0.5); }
+  .askbar.on-yellow input { color:rgba(0,0,0,0.5); }
+  .askbar.on-yellow input::placeholder { color:rgba(0,0,0,0.5); }
   .askbar.on-yellow.focused { border-color:#000; }
   .askbar .send {
     border:none; background:none; padding:0; cursor:pointer;
@@ -2142,7 +2142,7 @@
       <span class="ask-thumbs" id="askThumbs"></span>
       <input type="text" id="askInput" placeholder="Ask me anything."
              oninput="document.querySelector('.askbar .send').classList.toggle('active', this.value.trim().length>0)">
-      <button class="send"><svg style="width:30px;height:30px;display:block" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <button class="send"><svg style="width:25px;height:25px;display:block" width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="14.5519" cy="14.5519" r="14.5519" fill="#838383"/>
 <path d="M14.9619 20.0292V9.50537" stroke="#CACACA" stroke-width="1.63965"/>
 <path d="M10 14.4016L14.9622 9.43937L19.9245 14.4016" stroke="#CACACA" stroke-width="1.63965"/>
