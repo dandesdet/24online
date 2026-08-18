@@ -1015,6 +1015,8 @@
   }
   .brandctl-group.left  .designmd { left:-30px;  bottom:-40px; }
   .brandctl-group.right .designmd { right:-30px; bottom:-40px; }
+  /* mobile interactive swap widget (hidden on desktop) */
+  .brandctl-swap { display:none; }
   @media (max-width:900px) {
     .brandctl-stage { gap:110px; }
     .brandctl-group { width:88vw; }
@@ -1030,6 +1032,53 @@
       bottom:-110px;
       transform:translateX(-50%);
     }
+    /* swap widget replaces the two-card stage on mobile */
+    .brandctl-stage { display:none; }
+    .brandctl-swap {
+      display:block;
+      position:relative;
+      width:calc(100vw - 40px);
+      max-width:520px;
+      margin:60px auto 0;
+    }
+    .bc-frame {
+      position:relative;
+      width:100%;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,0.10);
+      box-shadow:0 20px 50px rgba(0,0,0,0.16);
+      touch-action:pan-y;   /* let vertical scroll pass, we handle horizontal swipe */
+    }
+    .bc-img {
+      width:100%; display:block;
+      transition:opacity .35s ease;
+    }
+    .bc-frame .bc-without {
+      position:absolute; inset:0;
+      opacity:0;
+    }
+    .brandctl-swap[data-state="without"] .bc-with    { opacity:0; }
+    .brandctl-swap[data-state="without"] .bc-without { opacity:1; }
+    /* toggle button: default top-left, moves to top-right in "without" state */
+    .bc-toggle {
+      position:absolute; top:-18px; left:0; z-index:5;
+      display:inline-flex; align-items:center; gap:8px;
+      background:#111820; color:#fff;
+      border:none; border-radius:999px;
+      padding:10px 16px;
+      font-family:inherit; font-size:14px; font-weight:600;
+      cursor:pointer;
+      box-shadow:0 8px 24px rgba(0,0,0,0.25);
+      transition:background .18s ease;
+      white-space:nowrap;
+    }
+    .bc-toggle:active { transform:scale(0.97); }
+    .brandctl-swap[data-state="without"] .bc-toggle { left:auto; right:0; }
+    /* arrow + label swap by state */
+    .bc-arrow-r { display:none; }
+    .brandctl-swap[data-state="without"] .bc-arrow-l { display:none; }
+    .brandctl-swap[data-state="without"] .bc-arrow-r { display:inline; }
   }
   /* ===== Banner Adaptations section (seventh floor) ===== */
   .banners {
@@ -2324,6 +2373,19 @@ function updateAskSend(){
       <img class="designmd" src="assets/brand_full.png" alt="Filled brand system" loading="lazy">
     </div>
   </div>
+
+  <!-- mobile-only interactive: swipe or tap the button to toggle BrandKit on/off -->
+  <div class="brandctl-swap" id="brandctlSwap" data-state="with">
+    <button class="bc-toggle" id="bcToggle" type="button">
+      <span class="bc-arrow bc-arrow-l">←</span>
+      <span class="bc-label">See result without BrandKit</span>
+      <span class="bc-arrow bc-arrow-r">→</span>
+    </button>
+    <div class="bc-frame" id="bcFrame">
+      <img class="bc-img bc-with"    src="assets/mentos_blue.png"  alt="With BrandKit" loading="lazy">
+      <img class="bc-img bc-without" src="assets/mentos_white.png" alt="Without BrandKit" loading="lazy">
+    </div>
+  </div>
 </section>
 
 <section class="banners" id="banners" style="display:none">
@@ -3282,6 +3344,47 @@ function toggleMobileMenu(){
   if(m){
     m.addEventListener('click', function(e){ if(e.target.closest('a')){ toggleMobileMenu(); } });
   }
+})();
+
+/* ===== Brand Kit mobile: toggle with/without BrandKit via button or swipe ===== */
+(function(){
+  var swap=document.getElementById('brandctlSwap');
+  if(!swap) return;
+  var btn=document.getElementById('bcToggle');
+  var frame=document.getElementById('bcFrame');
+  var label=swap.querySelector('.bc-label');
+
+  function setState(s){
+    swap.setAttribute('data-state', s);
+    label.textContent = (s==='without') ? 'See result with BrandKit' : 'See result without BrandKit';
+  }
+  function toggle(){
+    setState(swap.getAttribute('data-state')==='with' ? 'without' : 'with');
+  }
+
+  if(btn) btn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); toggle(); });
+
+  // horizontal swipe on the frame
+  var x0=null, y0=null, swiping=false;
+  frame.addEventListener('touchstart', function(e){
+    var t=e.touches[0]; x0=t.clientX; y0=t.clientY; swiping=false;
+  }, {passive:true});
+  frame.addEventListener('touchmove', function(e){
+    if(x0===null) return;
+    var t=e.touches[0];
+    var dx=t.clientX-x0, dy=t.clientY-y0;
+    if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>10) swiping=true;
+  }, {passive:true});
+  frame.addEventListener('touchend', function(e){
+    if(x0===null) return;
+    var t=e.changedTouches[0];
+    var dx=t.clientX-x0;
+    if(swiping && Math.abs(dx)>40){
+      // swipe left -> without, swipe right -> with
+      setState(dx<0 ? 'without' : 'with');
+    }
+    x0=null; y0=null; swiping=false;
+  }, {passive:true});
 })();
 </script>
 </body>
