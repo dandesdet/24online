@@ -1275,6 +1275,9 @@
   }
   @keyframes bulkspin { to { transform:rotate(360deg); } }
   @media (max-width:900px) {
+    /* full-bleed section; keep heading/sub/progress padded, table goes edge to edge */
+    .bulk { padding-left:0; padding-right:0; }
+    .bulk h2, .bulk-sub, .bulk-prog-top, .bulk-prog-track, .bulk-swipe-hint { padding-left:20px; padding-right:20px; }
     /* keep the full desktop table, make it horizontally swipeable */
     .bulk-panel { position:relative; }
     .bulk-table {
@@ -1282,11 +1285,13 @@
       -webkit-overflow-scrolling:touch;
       scroll-snap-type:x proximity;
       padding-bottom:6px;
+      scroll-padding-left:20px;
     }
     .bulk-table::-webkit-scrollbar { height:0; }
     .bulk-thead, .bulk-row {
-      min-width:720px;                         /* wider than screen -> swipe to see the rest */
+      min-width:740px;                         /* wider than screen -> swipe to see the rest */
       grid-template-columns:56px 0.7fr 0.8fr 0.9fr 1.5fr 0.9fr;
+      padding-left:20px; padding-right:20px;
     }
     .bulk-thead { display:grid; }              /* show the header again */
     .bulk-row .bulk-col-main, .bulk-row .bulk-col-text { display:block; }
