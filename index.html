@@ -108,13 +108,14 @@
   /* full-screen dim behind the menu (no heavy blur so it opens instantly) */
   .menu-overlay {
     display:none;
-    position:fixed; inset:0; z-index:8900;
+    position:fixed; top:0; left:0; right:0; bottom:0; z-index:8900;
     background:rgba(11,16,22,0.66);
   }
-  .menu-overlay.open { display:block; }
+  /* the header cutout: keep the top strip clear so the header is never dimmed */
+  .menu-overlay.open { display:block; clip-path:inset(72px 0 0 0); }
   .mobile-menu {
     display:none;
-    position:fixed; top:66px; left:16px; right:16px; z-index:9200;
+    position:fixed; top:72px; left:16px; right:16px; z-index:9200;
     flex-direction:column;
     background:rgba(30,42,56,0.96);
     backdrop-filter:blur(20px) saturate(160%);
