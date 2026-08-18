@@ -1267,14 +1267,37 @@
   }
   @keyframes bulkspin { to { transform:rotate(360deg); } }
   @media (max-width:900px) {
-    .bulk-thead { display:none; }
-    .bulk-row {
-      grid-template-columns:52px 1fr auto;
-      grid-auto-rows:auto; gap:10px 14px;
+    /* keep the full desktop table, make it horizontally swipeable */
+    .bulk-panel { position:relative; }
+    .bulk-table {
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      scroll-snap-type:x proximity;
+      padding-bottom:6px;
     }
-    .bulk-row .bulk-col-main, .bulk-row .bulk-col-text { display:none; }
-    .bulk-images { justify-content:flex-start; }
+    .bulk-table::-webkit-scrollbar { height:0; }
+    .bulk-thead, .bulk-row {
+      min-width:720px;                         /* wider than screen -> swipe to see the rest */
+      grid-template-columns:56px 1.4fr 0.8fr 0.9fr 1.5fr 0.9fr;
+    }
+    .bulk-thead { display:grid; }              /* show the header again */
+    .bulk-row .bulk-col-main, .bulk-row .bulk-col-text { display:block; }
+    /* fade + hint on the right edge to signal "swipe for more" */
+    .bulk-table.can-scroll::after {
+      content:"";
+      position:absolute; top:0; right:0; bottom:6px;
+      width:44px; pointer-events:none;
+      background:linear-gradient(to right, rgba(255,255,255,0), #ffffff);
+    }
+    .bulk-swipe-hint {
+      display:flex; align-items:center; gap:6px;
+      font-family:'Graphik RBC',sans-serif; font-size:13px; color:#9aa0a6;
+      margin:2px 2px 12px; justify-content:flex-end;
+    }
+    .bulk-swipe-hint .arr { animation:bulkHintNudge 1.3s ease-in-out infinite; }
   }
+  .bulk-swipe-hint { display:none; }           /* desktop: no hint */
+  @keyframes bulkHintNudge { 0%,100%{transform:translateX(0);} 50%{transform:translateX(4px);} }
   /* ===== Virtual Try-On section (ninth floor) ===== */
   .tryon {
     position: relative;
@@ -2414,7 +2437,9 @@ function updateAskSend(){
     <div class="bulk-prog-top"><span id="bulkPct">0%</span><span id="bulkTime">apr. 8 min left</span></div>
     <div class="bulk-prog-track"><div class="bulk-prog-fill" id="bulkFill"></div></div>
 
-    <div class="bulk-table">
+    <div class="bulk-swipe-hint" id="bulkSwipeHint"><span>Swipe to see the full table</span><span class="arr">→</span></div>
+
+    <div class="bulk-table" id="bulkTable">
       <div class="bulk-thead">
         <span></span>
         <span>Listing URL*</span>
@@ -3344,6 +3369,27 @@ function toggleMobileMenu(){
   if(m){
     m.addEventListener('click', function(e){ if(e.target.closest('a')){ toggleMobileMenu(); } });
   }
+})();
+
+/* ===== Bulk table: horizontal swipe hint on mobile ===== */
+(function(){
+  var table=document.getElementById('bulkTable');
+  var hint=document.getElementById('bulkSwipeHint');
+  if(!table) return;
+  function check(){
+    var scrollable = table.scrollWidth > table.clientWidth + 4;
+    table.classList.toggle('can-scroll', scrollable);
+    if(hint) hint.style.display = scrollable ? 'flex' : 'none';
+  }
+  // hide the hint once the user has scrolled the table a bit
+  table.addEventListener('scroll', function(){
+    if(table.scrollLeft > 20 && hint){ hint.style.opacity='0'; hint.style.transition='opacity .3s ease'; }
+    // drop the right fade when reaching the end
+    if(table.scrollLeft + table.clientWidth >= table.scrollWidth - 4){ table.classList.remove('can-scroll'); }
+    else { table.classList.add('can-scroll'); }
+  }, {passive:true});
+  window.addEventListener('resize', check);
+  check();
 })();
 
 /* ===== Brand Kit mobile: toggle with/without BrandKit via button or swipe ===== */
