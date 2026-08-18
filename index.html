@@ -1284,14 +1284,13 @@
       overflow-x:auto;
       -webkit-overflow-scrolling:touch;
       scroll-snap-type:x proximity;
-      padding-bottom:6px;
+      padding:0 32px 6px;          /* air around the row plates on both sides */
       scroll-padding-left:32px;
     }
     .bulk-table::-webkit-scrollbar { height:0; }
     .bulk-thead, .bulk-row {
-      min-width:752px;                         /* wider than screen -> swipe to see the rest */
+      min-width:720px;                         /* wider than screen -> swipe to see the rest */
       grid-template-columns:56px 0.7fr 0.8fr 0.9fr 1.5fr 0.9fr;
-      padding-left:32px; padding-right:32px;
     }
     .bulk-thead { display:grid; }              /* show the header again */
     .bulk-row .bulk-col-main, .bulk-row .bulk-col-text { display:block; }
