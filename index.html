@@ -108,7 +108,7 @@
   /* full-screen dim behind the menu (no heavy blur so it opens instantly) */
   .menu-overlay {
     display:none;
-    position:fixed; inset:0; z-index:9100;
+    position:fixed; inset:0; z-index:8900;
     background:rgba(11,16,22,0.66);
   }
   .menu-overlay.open { display:block; }
@@ -131,7 +131,13 @@
   }
   .mobile-menu a:hover { background:rgba(255,255,255,0.06); color:#fff; }
   /* burger turns yellow when the menu is open */
-  .nav-burger.active svg path { stroke:#FCCA2E; }
+  .nav-burger.active svg path,
+  .sticky-burger.active svg path { stroke:#FCCA2E; }
+  .nav-burger.active,
+  .sticky-burger.active {
+    background:rgba(252,202,46,0.18);
+    border-radius:10px;
+  }
   .btn-ghost {
     background:rgba(255,255,255,0.06); color:#fff;
     border:1px solid rgba(255,255,255,0.14);
@@ -2144,6 +2150,14 @@
   </div>
 </div>
 
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://24.online/about">About</a>
+  <a href="https://24.online/billing">Pricing</a>
+  <a href="https://24.online/prompt-library">Prompt Library</a>
+  <a href="https://24.online/affiliate">Affiliate</a>
+</div>
+
 <script>
 (function(){
   var plus=document.querySelector('.askbar .plus');
@@ -3238,6 +3252,8 @@ function toggleMobileMenu(){
   var open=m.classList.toggle('open');
   if(o) o.classList.toggle('open', open);
   if(b){ b.classList.toggle('active', open); b.setAttribute('aria-expanded', open?'true':'false'); }
+  var sb=document.querySelector('#stickyHeader .sticky-burger');
+  if(sb){ sb.classList.toggle('active', open); }
 }
 (function(){
   var b=document.getElementById('navBurger');
@@ -3267,13 +3283,5 @@ function toggleMobileMenu(){
   }
 })();
 </script>
-
-<div class="menu-overlay" id="menuOverlay"></div>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="https://24.online/about">About</a>
-  <a href="https://24.online/billing">Pricing</a>
-  <a href="https://24.online/prompt-library">Prompt Library</a>
-  <a href="https://24.online/affiliate">Affiliate</a>
-</div>
 </body>
 </html>
